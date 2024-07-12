@@ -18,7 +18,7 @@ const Login = ({ setLoggedIn, setUser }) => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('http://localhost:8000/api/login', credentials, { withCredentials: true });
+      const response = await axios.post('http://localhost:8000/api/login', { email, password }, { withCredentials: true });
       if (response.status === 200) {
         setLoggedIn(true);
         setUser(response.data.user);

@@ -13,7 +13,7 @@ const Home = () => {
             <Button id='btn' component={Link} to="/auth" variant="contained" color="primary" className="mr-4">
               Klient
             </Button>
-            <Button id='btn2' component={Link} to="/auth" variant="contained" color="primary">
+            <Button id='btn2' component={Link} to="/AdminAuth" variant="contained" color="primary">
               Admin
             </Button>
           </div>

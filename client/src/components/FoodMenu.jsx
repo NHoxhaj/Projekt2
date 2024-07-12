@@ -12,9 +12,11 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
   }, [searchTerm]);
 
   const handleAddToCart = (item) => {
+    console.log("Adding to cart:", item);
     const itemWithQuantity = { ...item, quantity: quantities[item._id] || 1 };
     addToCart(itemWithQuantity);
   };
+  
 
   return (
     <div className="food-menu">

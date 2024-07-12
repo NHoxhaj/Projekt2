@@ -12,6 +12,10 @@ const NavBar = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
   const handleCartClick = () => {
     navigate('/cart');
   };
+  
+  const handleOrdersClick = () => {
+    navigate('/orders');
+  };
 
   const handleLogoutClick = async () => {
     await handleLogout();
@@ -24,9 +28,9 @@ const NavBar = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
 
   return (
     <div>
-      <AppBar position="fixed" sx={{ backgroundColor: 'orange',height:'70px' ,marginBottom: '90px' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: 'orange', height: '70px', marginBottom: '90px' }}>
         <Toolbar>
-          <Typography variant="h1" component="div" sx={{ flexGrow: 0.5,fontSize:'40px' }}>
+          <Typography variant="h1" component="div" sx={{ flexGrow: 0.5, fontSize: '40px' }}>
             FooDish
           </Typography>
           {loggedIn ? (
@@ -38,13 +42,14 @@ const NavBar = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
                 size="small"
               />
               {user ? (
-                <Typography  sx={{ fontSize:'20px' }} variant="body1">Mire se vjen, {user.firstName}!</Typography>
+                <Typography sx={{ fontSize: '20px' }} variant="body1">Mire se vjen, {user.firstName}!</Typography>
               ) : (
                 <Typography variant="body1">Loading...</Typography>
               )}
-              <Button sx={{ fontSize:'20px' }}color="inherit" onClick={handleMenuClick}>Menu</Button>
-              <Button  sx={{ fontSize:'20px' }} color="inherit" onClick={handleCartClick}>Cart</Button>
-              <Button  sx={{ fontSize:'20px' }} color="inherit" onClick={handleLogoutClick}>Logout</Button>
+              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleMenuClick}>Menu</Button>
+              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleCartClick}>Cart</Button>
+              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleOrdersClick}>Orders</Button>
+              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleLogoutClick}>Logout</Button>
             </Box>
           ) : (
             <></>

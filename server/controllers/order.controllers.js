@@ -1,33 +1,26 @@
 const mongoose = require('mongoose');
 const Order = require('../models/order.models');
+const Item = require('../models/foodItem.models');
 
+const getOrder= async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user.id }).populate('items'); // Populate items
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching orders' });
+  }
+};
 const createOrder = async (req, res) => {
   const { items, orderNumber } = req.body;
   const userId = req.userId;
 
-  // Validate userId
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ error: 'Invalid userId' });
   }
 
-  // Convert userId to ObjectId
-  const validUserId = new mongoose.Types.ObjectId(userId);
-
-  // Ensure items are converted to ObjectId
-  let validItems;
   try {
-    validItems = items.map(item => {
-      if (!mongoose.Types.ObjectId.isValid(item)) {
-        throw new Error(`Invalid item ID: ${item}`);
-      }
-      return new mongoose.Types.ObjectId(item);
-    });
-  } catch (err) {
-    return res.status(400).json({ error: err.message });
-  }
-
-  try {
-    const newOrder = new Order({ userId: validUserId, items: validItems, orderNumber });
+    const validItems = items.map(item => new mongoose.Types.ObjectId(item));
+    const newOrder = new Order({ userId, items: validItems, orderNumber });
     const savedOrder = await newOrder.save();
     return res.status(201).json(savedOrder);
   } catch (error) {
@@ -35,9 +28,27 @@ const createOrder = async (req, res) => {
   }
 };
 
+const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find().populate('items'); 
+    return res.json(orders);
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to fetch orders', details: error.message });
+  }
+};
+const deleteOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    await Order.findByIdAndDelete(orderId);
+    return res.status(200).json({ message: 'Order deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to delete order', details: error.message });
+  }
+};
 const getOrderStatus = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const orderId = req.params.id;
+    const order = await Order.findById(orderId);
     if (order) {
       return res.json({ status: order.status });
     } else {
@@ -47,14 +58,25 @@ const getOrderStatus = async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch order status', details: error.message });
   }
 };
-
-const getAllOrders = async (req, res) => {
+const updateOrderStatus = async (req, res) => {
   try {
-    const orders = await Order.find();
-    return res.json(orders);
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!['Pending', 'Cooking', 'Coming'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value' });
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(id, { status }, { new: true });
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    return res.json(updatedOrder);
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to fetch orders', details: error.message });
+    return res.status(500).json({ message: 'Failed to update order status', details: error.message });
   }
 };
 
-module.exports = { createOrder, getOrderStatus, getAllOrders };
+module.exports = { createOrder, getOrderStatus, getAllOrders, deleteOrder, getOrder,updateOrderStatus };
