@@ -9,12 +9,12 @@ const orderSchema = new mongoose.Schema({
   items: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'FoodDelivery',
+      ref: 'FoodItem',
     },
   ],
   status: {
     type: String,
-    enum:['Pending','Cooking', 'Coming'],
+    enum:['Pending','Cooking', 'Finished'],
     default: 'Pending',
   },
   orderNumber: {

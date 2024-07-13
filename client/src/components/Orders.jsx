@@ -37,18 +37,6 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
     };
   }, []);
 
-  const handleDelete = async (orderId) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/orders/${orderId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      setOrders(orders.filter(order => order._id !== orderId));
-    } catch (err) {
-      console.error('Error deleting order:', err);
-    }
-  };
 
   return (
     <div>
@@ -63,11 +51,11 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
                 <p>Data: {new Date(order.createdAt).toLocaleString()}</p>
                 <p>Statusi: {order.status}</p>
                 <ul>
-                  {order.items.map((item, itemIndex) => (
-                    <li key={itemIndex}>{item.name || 'Item'} - Sasia: {item.quantity || 1}</li>
+                  {order.items.map((FoodItem, index) => (
+                    <li key={index}>{FoodItem.name || 'Item'} - Sasia: {FoodItem.quantity || 1}</li>
                   ))}
                 </ul>
-                <button onClick={() => handleDelete(order._id)}>Delete</button>
+       
               </li>
             ))}
           </ul>

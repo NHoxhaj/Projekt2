@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Home from './components/Home';
 import Auth from './components/Auth';
 import FoodMenu from './components/FoodMenu';
 import Cart from './components/Cart';
-import NavBar from './components/Navbar';
+import NavBar from './components/NavBar';
+import AdminNavBar from './components/AdminNavBar'
 import axios from 'axios';
 import './App.css';
 import Orders from './components/Orders';
@@ -18,7 +19,7 @@ const App = () => {
   const [quantities, setQuantities] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [AdminloggedIn, setAdminLoggedIn] = useState(false);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -36,6 +37,7 @@ const App = () => {
     };
     checkLoginStatus();
   }, []);
+
   useEffect(() => {
     const checkAdminLoginStatus = async () => {
       try {
@@ -60,6 +62,7 @@ const App = () => {
       console.error('Error checking login status:', err);
     }
   };
+
   const handleAdminAuthError = (err) => {
     if (err.response && err.response.status === 401) {
       setAdminLoggedIn(false);
@@ -69,7 +72,6 @@ const App = () => {
       console.error('Error checking login status:', err);
     }
   };
-
 
   const addToCart = (item) => {
     setCartItems(prevItems => {
@@ -91,6 +93,7 @@ const App = () => {
   const handleQuantityChange = (id, newQuantity) => {
     setQuantities(prevQuantities => ({ ...prevQuantities, [id]: newQuantity }));
   };
+
   const placeOrder = async () => {
     try {
       const response = await axios.post('http://localhost:8000/api/orders', {
@@ -113,7 +116,6 @@ const App = () => {
       alert('An unexpected error occurred');
     }
   };
-  
 
   const handleLogout = async () => {
     try {
@@ -125,6 +127,7 @@ const App = () => {
       alert('An unexpected error occurred');
     }
   };
+
   const handleAdminLogout = async () => {
     try {
       await axios.get('http://localhost:8000/api/admin/logout');
@@ -154,10 +157,10 @@ const App = () => {
         ) : (
           <Navigate to="/auth" />
         )} />
-            <Route path="/admin" element={AdminloggedIn ? (
+        <Route path="/admin/orders" element={adminLoggedIn ? (
           <>
-            <AdminOrders AdminloggedIn={AdminloggedIn} admin={admin} />
-          
+            <AdminNavBar handleLogout={handleAdminLogout} />
+            <AdminOrders AdminloggedIn={adminLoggedIn} admin={admin} />
           </>
         ) : (
           <Navigate to="/AdminAuth" />

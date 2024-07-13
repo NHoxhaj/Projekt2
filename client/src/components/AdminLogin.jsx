@@ -22,7 +22,7 @@ const AdminLogin = ({ setAdminLoggedIn, setAdmin }) => {
       if (response.status === 200) {
         setAdminLoggedIn(true);
         setAdmin(response.data.admin);
-        navigate('/admin');
+        navigate('/admin/orders');
       } else {
         setError('Login failed');
       }

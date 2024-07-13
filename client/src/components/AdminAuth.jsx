@@ -34,7 +34,7 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
       if (response.status === 200 || response.status === 201) {
         setAdminLoggedIn(true);
         setAdmin(response.data.admin);
-        navigate('/admin');
+        navigate('/admin/orders');
       } else {
         setError(`${isAdminLogin ? 'Login' : 'Registration'} failed`);
       }

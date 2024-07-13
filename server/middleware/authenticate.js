@@ -22,7 +22,7 @@ module.exports.authenticate = (req, res, next) => {
 
 // Middleware for admin routes
 module.exports.adminAuthenticate = (req, res, next) => {
-  const token = req.cookies.admintoken;
+  const token = req.cookies.admintoken || req.headers.authorization.split(' ')[1]; // Check cookies or authorization header
   if (!token) {
     return res.status(401).json({ verified: false, message: "No token provided" });
   }
