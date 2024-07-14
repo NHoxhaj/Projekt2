@@ -5,14 +5,14 @@ import Auth from './components/Auth';
 import FoodMenu from './components/FoodMenu';
 import Cart from './components/Cart';
 import NavBar from './components/Navbar';
-import AdminNavBar from './components/AdminNavBar'
+import AdminNavBar from './components/AdminNavBar';
 import axios from 'axios';
 import './App.css';
 import Orders from './components/Orders';
 import AdminAuth from './components/AdminAuth';
 import AdminOrders from './components/admin';
 import Footer from './components/Footer';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 axios.defaults.withCredentials = true;
 
@@ -24,6 +24,8 @@ const App = () => {
   const [adminLoggedIn, setAdminLoggedIn] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [qyteti, setQyteti] = useState('');
+  const [adresa, setAdresa] = useState('');
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -99,7 +101,9 @@ const App = () => {
   const placeOrder = async () => {
     try {
       const response = await axios.post('http://localhost:8000/api/orders', {
-        items: cartItems.map(item => item.id),
+        items: cartItems.map(item => ({ id: item.id, quantity: item.quantity })),
+        qyteti,
+        adresa,
         orderNumber: `ORD-${Date.now()}`
       }, {
         headers: {
@@ -110,6 +114,8 @@ const App = () => {
         alert('Order placed successfully');
         setCartItems([]);
         setQuantities({});
+        setQyteti('');
+        setAdresa('');
       } else {
         alert('Failed to place order');
       }
@@ -163,7 +169,7 @@ const App = () => {
         <Route path="/admin/orders" element={adminLoggedIn ? (
           <>
             <AdminNavBar handleLogout={handleAdminLogout} />
-            <AdminOrders AdminloggedIn={adminLoggedIn} admin={admin} />
+            <AdminOrders adminLoggedIn={adminLoggedIn} admin={admin} />
           </>
         ) : (
           <Navigate to="/AdminAuth" />
@@ -171,7 +177,15 @@ const App = () => {
         <Route path="/cart" element={loggedIn ? (
           <>
             <NavBar loggedIn={loggedIn} user={user} handleLogout={handleLogout} setSearchTerm={setSearchTerm} />
-            <Cart cartItems={cartItems} removeFromCart={removeFromCart} placeOrder={placeOrder} />
+            <Cart 
+              cartItems={cartItems} 
+              removeFromCart={removeFromCart} 
+              placeOrder={placeOrder} 
+              qyteti={qyteti}
+              setQyteti={setQyteti}
+              adresa={adresa}
+              setAdresa={setAdresa}
+            />
           </>
         ) : (
           <Navigate to="/auth" />
@@ -179,7 +193,14 @@ const App = () => {
         
         <Route path="/orders" element={loggedIn ? (
           <>
-            <Orders cartItems={cartItems} placeOrder={placeOrder} loggedIn={loggedIn} user={user} handleLogout={handleLogout} setSearchTerm={setSearchTerm} />
+            <Orders 
+              cartItems={cartItems} 
+              placeOrder={placeOrder} 
+              loggedIn={loggedIn} 
+              user={user} 
+              handleLogout={handleLogout} 
+              setSearchTerm={setSearchTerm} 
+            />
           </>
         ) : (
           <Navigate to="/auth" />
@@ -190,3 +211,4 @@ const App = () => {
 };
 
 export default App;
+

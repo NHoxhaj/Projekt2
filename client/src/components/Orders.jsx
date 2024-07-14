@@ -3,7 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import NavBar from './Navbar.jsx';
 
-const socket = io('http://localhost:8000'); 
+const socket = io('http://localhost:8000');
 
 const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
   const [orders, setOrders] = useState([]);
@@ -25,8 +25,8 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
     fetchOrders();
 
     socket.on('orderStatusUpdated', (updatedOrder) => {
-      setOrders((prevOrders) => 
-        prevOrders.map((order) => 
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
           order._id === updatedOrder._id ? updatedOrder : order
         )
       );
@@ -48,6 +48,8 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
               <li key={index} className="order-item">
                 <p>Numri i porosise: {order.orderNumber}</p>
                 <p>Data: {new Date(order.createdAt).toLocaleString()}</p>
+                <p>Qyteti: {order.qyteti}</p>
+                <p>Adresa: {order.adresa}</p>
                 <p>Statusi: {order.status}</p>
                 <ul>
                   {order.items.map((foodItem, itemIndex) => (

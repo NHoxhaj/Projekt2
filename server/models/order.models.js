@@ -17,6 +17,14 @@ const orderSchema = new mongoose.Schema({
     enum:['Pending','Cooking', 'Finished'],
     default: 'Pending',
   },
+  qyteti: {
+    type: String,
+    required: true,
+  },
+  adresa: {
+    type: String,
+    required: true,
+  },
   orderNumber: {
     type: String,
     required: true,

@@ -11,7 +11,7 @@ const getOrder= async (req, res) => {
   }
 };
 const createOrder = async (req, res) => {
-  const { items, orderNumber } = req.body;
+  const { items, orderNumber, qyteti, adresa  } = req.body;
   const userId = req.userId;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -20,7 +20,7 @@ const createOrder = async (req, res) => {
 
   try {
     const validItems = items.map(item => new mongoose.Types.ObjectId(item));
-    const newOrder = new Order({ userId, items: validItems, orderNumber });
+    const newOrder = new Order({ userId, items: validItems, orderNumber, qyteti, adresa  });
     const savedOrder = await newOrder.save();
     return res.status(201).json(savedOrder);
   } catch (error) {

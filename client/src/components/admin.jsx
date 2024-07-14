@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
-
 const socket = io('http://localhost:8000');
 
 const AdminOrders = () => {
@@ -25,8 +24,8 @@ const AdminOrders = () => {
     fetchOrders();
 
     socket.on('orderStatusUpdated', (updatedOrder) => {
-      setOrders((prevOrders) => 
-        prevOrders.map((order) => 
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
           order._id === updatedOrder._id ? updatedOrder : order
         )
       );
@@ -61,7 +60,7 @@ const AdminOrders = () => {
       });
 
       if (response.status === 200) {
-        setOrders(orders.map(order => 
+        setOrders(orders.map(order =>
           order._id === orderId ? { ...order, status: newStatus } : order
         ));
         socket.emit('orderStatusUpdated', { _id: orderId, status: newStatus });
@@ -74,23 +73,24 @@ const AdminOrders = () => {
   return (
     <div>
       <div className="ordersContainer">
-        <h1>Porosite</h1>
+        <h1>Porositë</h1>
         {orders.length > 0 ? (
           <ul>
             {orders.map((order, index) => (
               <li key={index} className="order-item">
-                <p>Numri i porosise: {order.orderNumber}</p>
+                <p>Numri i porosisë: {order.orderNumber}</p>
                 <p>Data: {new Date(order.createdAt).toLocaleString()}</p>
+                <p>Qyteti: {order.qyteti}</p>
+                <p>Adresa: {order.adresa}</p>
                 <p>Statusi: {order.status}</p>
                 <ul>
                   {order.items.map((FoodItem, index) => (
-                    <li key={index}>{FoodItem.name || 'Item'} - Quantity: {FoodItem.quantity || 1}</li>
+                    <li key={index}>{FoodItem.name || 'Item'} - Sasia: {FoodItem.quantity || 1}</li>
                   ))}
                 </ul>
-                <select 
+                <select
                   value={order.status}
-                  onChange={(e) => handleStatusChange(order._id, e.target.value) }
-                  
+                  onChange={(e) => handleStatusChange(order._id, e.target.value)}
                 >
                   <option value="Pending">Pending</option>
                   <option value="Cooking">Cooking</option>

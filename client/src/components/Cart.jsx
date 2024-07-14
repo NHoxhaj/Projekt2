@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { food_list } from '../assets/assets';
+import axios from 'axios';
 
-const Cart = ({ cartItems, removeFromCart, placeOrder }) => {
+
+const Cart = ({ cartItems, removeFromCart, placeOrder, qyteti, setQyteti, adresa, setAdresa }) => {
   const [itemsInCart, setItemsInCart] = useState([]);
-
   useEffect(() => {
     const selectedItems = food_list.filter(item => cartItems.some(cartItem => cartItem.id === item._id));
     const itemsWithQuantities = selectedItems.map(item => {
@@ -12,6 +13,7 @@ const Cart = ({ cartItems, removeFromCart, placeOrder }) => {
     });
     setItemsInCart(itemsWithQuantities);
   }, [cartItems]);
+
 
   return (
     <div className="food-menu">
@@ -31,12 +33,30 @@ const Cart = ({ cartItems, removeFromCart, placeOrder }) => {
               <button onClick={() => removeFromCart(item._id)} className="remove">Remove</button>
             </div>
           </div>
-          
         ))}
       </ul>
-      <button onClick={placeOrder} id="order">Perfundo porosine</button>
+      <div className="form-group">
+        <label htmlFor="qyteti">Qyteti: </label>
+        <input
+          type="text"
+          id="qyteti"
+          value={qyteti}
+          onChange={(e) => setQyteti(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="adresa">Adresa:</label>
+        <input
+          type="text"
+          id="adresa"
+          value={adresa}
+          onChange={(e) => setAdresa(e.target.value)}
+        />
+      </div>
+      <button id='order' onClick={placeOrder}>Dërgo Porosinë</button>
     </div>
   );
 };
 
 export default Cart;
+
