@@ -4,7 +4,7 @@ const Item = require('../models/foodItem.models');
 
 const getOrder= async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.user.id }).populate('items'); // Populate items
+    const orders = await Order.find({ userId: req.user.id }).populate('items'); 
     res.json(orders);
   } catch (err) {
     res.status(500).json({ error: 'Error fetching orders' });

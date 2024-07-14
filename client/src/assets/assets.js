@@ -116,261 +116,261 @@ export const menu_list = [
         menu_image: menu_8
     }]
 
-    export const food_list = [
-        {
-            _id: "60d0fe4f5311236168a109ca",  // Example ObjectId
-            name: "Greek salad",
-            image: food_1,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Salad"
-        },
-        {
-            _id: "60d0fe4f5311236168a109cb",  // Example ObjectId
-            name: "Veg salad",
-            image: food_2,
-            price: 18,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Salad"
-        },
-        {
-            _id: "60d0fe4f5311236168a109cc",  // Example ObjectId
-            name: "Clover Salad",
-            image: food_3,
-            price: 16,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Salad"
-        },
-        {
-            _id: "60d0fe4f5311236168a109cd",  // Example ObjectId
-            name: "Chicken Salad",
-            image: food_4,
-            price: 24,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Salad"
-        },
-        {
-            _id: "60d0fe4f5311236168a109ce",  // Example ObjectId
-            name: "Lasagna Rolls",
-            image: food_5,
-            price: 14,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Rolls"
-        },
-        {
-            _id: "60d0fe4f5311236168a109cf",  // Example ObjectId
-            name: "Peri Peri Rolls",
-            image: food_6,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Rolls"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d0",  // Example ObjectId
-            name: "Chicken Rolls",
-            image: food_7,
-            price: 20,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Rolls"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d1",  // Example ObjectId
-            name: "Veg Rolls",
-            image: food_8,
-            price: 15,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Rolls"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d2",  // Example ObjectId
-            name: "Ripple Ice Cream",
-            image: food_9,
-            price: 14,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Deserts"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d3",  // Example ObjectId
-            name: "Fruit Ice Cream",
-            image: food_10,
-            price: 22,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Deserts"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d4",  // Example ObjectId
-            name: "Jar Ice Cream",
-            image: food_11,
-            price: 10,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Deserts"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d5",  // Example ObjectId
-            name: "Vanilla Ice Cream",
-            image: food_12,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Deserts"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d6",  // Example ObjectId
-            name: "Chicken Sandwich",
-            image: food_13,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Sandwich"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d7",  // Example ObjectId
-            name: "Vegan Sandwich",
-            image: food_14,
-            price: 18,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Sandwich"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d8",  // Example ObjectId
-            name: "Grilled Sandwich",
-            image: food_15,
-            price: 16,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Sandwich"
-        },
-        {
-            _id: "60d0fe4f5311236168a109d9",  // Example ObjectId
-            name: "Bread Sandwich",
-            image: food_16,
-            price: 24,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Sandwich"
-        },
-        {
-            _id: "60d0fe4f5311236168a109da",  // Example ObjectId
-            name: "Cup Cake",
-            image: food_17,
-            price: 14,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Cake"
-        },
-        {
-            _id: "60d0fe4f5311236168a109db",  // Example ObjectId
-            name: "Vegan Cake",
-            image: food_18,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Cake"
-        },
-        {
-            _id: "60d0fe4f5311236168a109dc",  // Example ObjectId
-            name: "Butterscotch Cake",
-            image: food_19,
-            price: 20,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Cake"
-        },
-        {
-            _id: "60d0fe4f5311236168a109dd",  // Example ObjectId
-            name: "Sliced Cake",
-            image: food_20,
-            price: 15,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Cake"
-        },
-        {
-            _id: "60d0fe4f5311236168a109de",  // Example ObjectId
-            name: "Garlic Mushroom",
-            image: food_21,
-            price: 14,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pure Veg"
-        },
-        {
-            _id: "60d0fe4f5311236168a109df",  // Example ObjectId
-            name: "Fried Cauliflower",
-            image: food_22,
-            price: 22,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pure Veg"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e0",  // Example ObjectId
-            name: "Mix Veg Pulao",
-            image: food_23,
-            price: 10,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pure Veg"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e1",  // Example ObjectId
-            name: "Rice Zucchini",
-            image: food_24,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pure Veg"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e2",  // Example ObjectId
-            name: "Cheese Pasta",
-            image: food_25,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pasta"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e3",  // Example ObjectId
-            name: "Tomato Pasta",
-            image: food_26,
-            price: 18,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pasta"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e4",  // Example ObjectId
-            name: "Creamy Pasta",
-            image: food_27,
-            price: 16,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pasta"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e5",  // Example ObjectId
-            name: "Chicken Pasta",
-            image: food_28,
-            price: 24,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Pasta"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e6",  // Example ObjectId
-            name: "Butter Noodles",
-            image: food_29,
-            price: 14,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Noodles"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e7",  // Example ObjectId
-            name: "Veg Noodles",
-            image: food_30,
-            price: 12,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Noodles"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e8",  // Example ObjectId
-            name: "Somen Noodles",
-            image: food_31,
-            price: 20,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Noodles"
-        },
-        {
-            _id: "60d0fe4f5311236168a109e9",  // Example ObjectId
-            name: "Cooked Noodles",
-            image: food_32,
-            price: 15,
-            description: "Food provides essential nutrients for overall health and well-being",
-            category: "Noodles"
-        }
-    ];
+export const food_list = [
+    {
+        _id: "60d0fe4f5311236168a109cb",  // Example ObjectId
+        name: "Sallatë Vegjetariane",
+        image: food_2,
+        price: 18,
+        description: "Përbërësit: domate, kastravec, qepë, ullinj, djathë feta",
+        category: "Salad"
+    },
+    {
+        _id: "60d0fe4f5311236168a109ca",  // Example ObjectId
+        name: "Sallatë Greke",
+        image: food_1,
+        price: 12,
+        description: "Përbërësit: marule, karrota, speca, kastravec, qepë",
+        category: "Salad"
+    },
+    {
+        _id: "60d0fe4f5311236168a109cc",  // Example ObjectId
+        name: "Sallatë Klore",
+        image: food_3,
+        price: 16,
+        description: "Përbërësit: lakër, karrota, speca, rrush i thatë, arra",
+        category: "Salad"
+    },
+    {
+        _id: "60d0fe4f5311236168a109cd",  // Example ObjectId
+        name: "Sallatë me Pulë",
+        image: food_4,
+        price: 24,
+        description: "Përbërësit: marule, fileto pule, domate, kastravec, qepë",
+        category: "Salad"
+    },
+    {
+        _id: "60d0fe4f5311236168a109ce",  // Example ObjectId
+        name: "Roll Lasagna",
+        image: food_5,
+        price: 14,
+        description: "Përbërësit: petë lasagna, mish viçi, djathë mozzarella, domate",
+        category: "Rolls"
+    },
+    {
+        _id: "60d0fe4f5311236168a109cf",  // Example ObjectId
+        name: "Roll Peri Peri",
+        image: food_6,
+        price: 12,
+        description: "Përbërësit: mish pule, speca peri peri, djathë, domate",
+        category: "Rolls"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d0",  // Example ObjectId
+        name: "Roll Pulë",
+        image: food_7,
+        price: 20,
+        description: "Përbërësit: fileto pule, speca, qepë, domate",
+        category: "Rolls"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d1",  // Example ObjectId
+        name: "Roll Vegjetarian",
+        image: food_8,
+        price: 15,
+        description: "Përbërësit: marule, karrota, speca, domate",
+        category: "Rolls"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d2",  // Example ObjectId
+        name: "Akullore Ripple",
+        image: food_9,
+        price: 14,
+        description: "Përbërësit: qumësht, sheqer, vanilje, fruta",
+        category: "Deserts"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d3",  // Example ObjectId
+        name: "Akullore Frutash",
+        image: food_10,
+        price: 22,
+        description: "Përbërësit: qumësht, sheqer, fruta të freskëta",
+        category: "Deserts"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d4",  // Example ObjectId
+        name: "Akullore në Kavanoz",
+        image: food_11,
+        price: 10,
+        description: "Përbërësit: qumësht, sheqer, vanilje",
+        category: "Deserts"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d5",  // Example ObjectId
+        name: "Akullore Vanilje",
+        image: food_12,
+        price: 12,
+        description: "Përbërësit: qumësht, sheqer, vanilje",
+        category: "Deserts"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d6",  // Example ObjectId
+        name: "Sanduiç me Pulë",
+        image: food_13,
+        price: 12,
+        description: "Përbërësit: bukë, fileto pule, domate, kastravec, sallatë",
+        category: "Sandwich"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d7",  // Example ObjectId
+        name: "Sanduiç Vegan",
+        image: food_14,
+        price: 16,
+        description: "Përbërësit: bukë, avokado, domate, marule, qepë",
+        category: "Sandwich"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d8",  // Example ObjectId
+        name: "Sanduiç me Proshutë",
+        image: food_15,
+        price: 14,
+        description: "Përbërësit: bukë, proshutë, domate, kastravec, marule",
+        category: "Sandwich"
+    },
+    {
+        _id: "60d0fe4f5311236168a109d9",  // Example ObjectId
+        name: "Sanduiç me Djathë",
+        image: food_16,
+        price: 14,
+        description: "Përbërësit: bukë, djathë, domate, marule",
+        category: "Sandwich"
+    },
+    {
+        _id: "60d0fe4f5311236168a109da",  // Example ObjectId
+        name: "Cup Cake",
+        image: food_17,
+        price: 16,
+        description: "Përbërësit: miell, sheqer, vezë, luleshtrydhe, gjalpë",
+        category: "Cake"
+    },
+    {
+        _id: "60d0fe4f5311236168a109db",  // Example ObjectId
+        name: "Tortë Vanilje",
+        image: food_18,
+        price: 14,
+        description: "Përbërësit: miell, sheqer, vezë, vanilje, gjalpë",
+        category: "Cake"
+    },
+    {
+        _id: "60d0fe4f5311236168a109dc",  // Example ObjectId
+        name: "Tortë Red Velvet",
+        image: food_19,
+        price: 18,
+        description: "Përbërësit: miell, sheqer, vezë, ngjyrë e kuqe, gjalpë",
+        category: "Cake"
+    },
+    {
+        _id: "60d0fe4f5311236168a109dd",  // Example ObjectId
+        name: "Tortë Frutash",
+        image: food_20,
+        price: 20,
+        description: "Përbërësit: miell, sheqer, vezë, fruta të freskëta, gjalpë",
+        category: "Cake"
+    },
+    {
+        _id: "60d0fe4f5311236168a109de",  // Example ObjectId
+        name: "Pasta me Djathë",
+        image: food_21,
+        price: 22,
+        description: "Përbërësit: makaronë, djathë, qumësht, gjalpë, erëza",
+        category: "Pasta"
+    },
+    {
+        _id: "60d0fe4f5311236168a109df",  // Example ObjectId
+        name: "Pasta me Pulë",
+        image: food_22,
+        price: 20,
+        description: "Përbërësit: makaronë, fileto pule, salcë, erëza",
+        category: "Pasta"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e0",  // Example ObjectId
+        name: "Pasta Bolognese",
+        image: food_23,
+        price: 18,
+        description: "Përbërësit: makaronë, mish viçi, domate, erëza",
+        category: "Pasta"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e1",  // Example ObjectId
+        name: "Pasta Vegjetariane",
+        image: food_24,
+        price: 22,
+        description: "Përbërësit: makaronë, perime të freskëta, salcë, erëza",
+        category: "Pasta"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e2",  // Example ObjectId
+        name: "Noodle Kineze",
+        image: food_25,
+        price: 18,
+        description: "Përbërësit: noodle, perime, salcë soje, mish",
+        category: "Noodles"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e3",  // Example ObjectId
+        name: "Noodle Indiane",
+        image: food_26,
+        price: 16,
+        description: "Përbërësit: noodle, perime, erëza indiane, mish pule",
+        category: "Noodles"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e4",  // Example ObjectId
+        name: "Noodle Vegjetariane",
+        image: food_27,
+        price: 14,
+        description: "Përbërësit: noodle, perime të freskëta, salcë soje",
+        category: "Noodles"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e5",  // Example ObjectId
+        name: "Noodle Pulë",
+        image: food_28,
+        price: 20,
+        description: "Përbërësit: noodle, fileto pule, perime, salcë soje",
+        category: "Noodles"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e6",  // Example ObjectId
+        name: "Noodle Vegjetariane",
+        image: food_29,
+        price: 14,
+        description: "Përbërësit: perime të freskëta, oriz, salcë",
+        category: "Pure Veg"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e7",  // Example ObjectId
+        name: "Somen Noodles",
+        image: food_30,
+        price: 12,
+        description: "Përbërësit: patate të skuqura, djathë, salcë",
+        category: "Pure Veg"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e8",  // Example ObjectId
+        name: "Cooked Noodles",
+        image: food_31,
+        price: 18,
+        description: "Përbërësit: oriz, perime të freskëta, erëza",
+        category: "Pure Veg"
+    },
+    {
+        _id: "60d0fe4f5311236168a109e9",  // Example ObjectId
+        name: "Pjatë Meze",
+        image: food_32,
+        price: 22,
+        description: "Përbërësit: perime të freskëta, humus, pita",
+        category: "Pure Veg"
+    }
+]

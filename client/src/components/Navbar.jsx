@@ -47,8 +47,8 @@ const NavBar = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
                 <Typography variant="body1">Loading...</Typography>
               )}
               <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleMenuClick}>Menu</Button>
-              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleCartClick}>Cart</Button>
-              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleOrdersClick}>Orders</Button>
+              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleCartClick}>Karta</Button>
+              <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleOrdersClick}>Porosite</Button>
               <Button sx={{ fontSize: '20px' }} color="inherit" onClick={handleLogoutClick}>Logout</Button>
             </Box>
           ) : (

@@ -258,20 +258,21 @@
   height: 150px;
 }
 #cmimi{
-  margin-top: 50px;
+  margin-top: 5px;
 }
 .remove{
   background-color: orange;
-  border-radius: 10%;
+  border-radius: 10px;
   margin-right: 20px;
   font-size: 20px;
   border: 1px solid black;
 }
 #order{
-  background-color: orange;
-  border-radius: 10%;
+  background-color: rgba(255, 166, 0, 0.897);
+  border-radius: 10px;
   margin-top: 5%;
-  margin-left: 39%;
+  margin-left: 40%;
+  color: white;
   font-size: 20px;
   border: 1px solid rgb(187, 113, 1);
 }
@@ -284,4 +285,7 @@
   transition: transform 0.2s;
   background-color: rgb(255, 193, 78);
   
+}
+.ordersContainer{
+  padding-top: 70px;
 }

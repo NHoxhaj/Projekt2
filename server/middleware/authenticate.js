@@ -14,7 +14,7 @@ module.exports.authenticate = (req, res, next) => {
       return res.status(401).json({ verified: false, message: "Invalid token" });
     } else {
       req.userId = payload.id;
-      req.userRole = payload.role; // Assuming the token payload contains a role property
+      req.userRole = payload.role;
       next();
     }
   });
@@ -22,7 +22,15 @@ module.exports.authenticate = (req, res, next) => {
 
 // Middleware for admin routes
 module.exports.adminAuthenticate = (req, res, next) => {
-  const token = req.cookies.admintoken || req.headers.authorization.split(' ')[1]; // Check cookies or authorization header
+  let token = req.cookies.admintoken;
+
+  if (!token && req.headers.authorization) {
+    const authHeaderParts = req.headers.authorization.split(' ');
+    if (authHeaderParts.length === 2) {
+      token = authHeaderParts[1];
+    }
+  }
+
   if (!token) {
     return res.status(401).json({ verified: false, message: "No token provided" });
   }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import image from '../assets/image.png';
+import '../App.css';
 
 const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
   const [isAdminLogin, setIsAdminLogin] = useState(true);
@@ -98,6 +100,7 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
           </form>
         </div>
         <div className={`auth-toggle-container ${isAdminLogin ? 'toggle-left' : 'toggle-right'}`}>
+        <div><img src={image} alt="logo" className="logo" /> </div>
           <p onClick={() => setIsAdminLogin(!isAdminLogin)}>
             {isAdminLogin ? 'Nuk e ke nje llogari? ' : 'E ke tashme nje llogari? '}
           </p>

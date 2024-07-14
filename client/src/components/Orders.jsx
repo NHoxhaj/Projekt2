@@ -37,7 +37,6 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
     };
   }, []);
 
-
   return (
     <div>
       <NavBar loggedIn={loggedIn} user={user} handleLogout={handleLogout} setSearchTerm={setSearchTerm} />
@@ -51,11 +50,10 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
                 <p>Data: {new Date(order.createdAt).toLocaleString()}</p>
                 <p>Statusi: {order.status}</p>
                 <ul>
-                  {order.items.map((FoodItem, index) => (
-                    <li key={index}>{FoodItem.name || 'Item'} - Sasia: {FoodItem.quantity || 1}</li>
+                  {order.items.map((foodItem, itemIndex) => (
+                    <li key={itemIndex}>{foodItem.name} - Sasia: {foodItem.quantity || 1}</li>
                   ))}
                 </ul>
-       
               </li>
             ))}
           </ul>

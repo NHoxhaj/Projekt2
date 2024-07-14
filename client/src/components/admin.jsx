@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
+
 const socket = io('http://localhost:8000');
 
 const AdminOrders = () => {
@@ -72,7 +73,7 @@ const AdminOrders = () => {
 
   return (
     <div>
-      <div className="orders-container">
+      <div className="ordersContainer">
         <h1>Porosite</h1>
         {orders.length > 0 ? (
           <ul>

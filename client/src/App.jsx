@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './components/Home';
 import Auth from './components/Auth';
 import FoodMenu from './components/FoodMenu';
 import Cart from './components/Cart';
-import NavBar from './components/NavBar';
+import NavBar from './components/Navbar';
 import AdminNavBar from './components/AdminNavBar'
 import axios from 'axios';
 import './App.css';
 import Orders from './components/Orders';
 import AdminAuth from './components/AdminAuth';
 import AdminOrders from './components/admin';
+import Footer from './components/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 axios.defaults.withCredentials = true;
 
@@ -153,6 +155,7 @@ const App = () => {
                 <FoodMenu addToCart={addToCart} searchTerm={searchTerm} handleQuantityChange={handleQuantityChange} quantities={quantities} />
               </div>
             </div>
+            <Footer /> 
           </>
         ) : (
           <Navigate to="/auth" />
@@ -173,9 +176,10 @@ const App = () => {
         ) : (
           <Navigate to="/auth" />
         )} />
+        
         <Route path="/orders" element={loggedIn ? (
           <>
-            <Orders loggedIn={loggedIn} user={user} handleLogout={handleLogout} setSearchTerm={setSearchTerm} />
+            <Orders cartItems={cartItems} placeOrder={placeOrder} loggedIn={loggedIn} user={user} handleLogout={handleLogout} setSearchTerm={setSearchTerm} />
           </>
         ) : (
           <Navigate to="/auth" />
