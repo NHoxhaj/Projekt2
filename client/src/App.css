@@ -292,3 +292,13 @@
 #qyteti{
   margin: 10px 3px 10px;
 }
+body{
+  color: #5d94be;
+}
+#delete{
+  background-color: orange;
+  border-radius: 10px;
+  margin-left: 20px;
+  font-size: 20px;
+  border: 1px solid black;
+}

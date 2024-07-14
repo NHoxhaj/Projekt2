@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { food_list } from '../assets/assets';
 
+
 const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) => {
   const [filteredItems, setFilteredItems] = useState([]);
+  
 
   useEffect(() => {
     const filtered = food_list.filter(item =>
@@ -19,7 +21,9 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
   
 
   return (
+    
     <div className="food-menu">
+      
       <h1 id='menu'>Menu</h1>
       {filteredItems.map(item => (
         <div key={item._id} className="food-item">

@@ -96,7 +96,7 @@ const AdminOrders = () => {
                   <option value="Cooking">Cooking</option>
                   <option value="Finished">Finished</option>
                 </select>
-                <button onClick={() => handleDelete(order._id)}>Delete</button>
+                <button id='delete' onClick={() => handleDelete(order._id)}>Delete</button>
               </li>
             ))}
           </ul>

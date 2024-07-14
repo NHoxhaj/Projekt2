@@ -8,7 +8,6 @@ const NavBar = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
   const handleMenuClick = () => {
     navigate('/menu');
   };
-
   const handleCartClick = () => {
     navigate('/cart');
   };
@@ -30,7 +29,7 @@ const NavBar = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
     <div>
       <AppBar position="fixed" sx={{ backgroundColor: 'orange', height: '70px', marginBottom: '90px' }}>
         <Toolbar>
-          <Typography variant="h1" component="div" sx={{ flexGrow: 0.5, fontSize: '40px' }}>
+          <Typography onClick={handleMenuClick} variant="h1" component="div" sx={{ flexGrow: 0.5, fontSize: '40px' }}>
             FooDish
           </Typography>
           {loggedIn ? (
