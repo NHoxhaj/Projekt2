@@ -5,7 +5,7 @@ import Auth from './components/Auth';
 import FoodMenu from './components/FoodMenu';
 import Cart from './components/Cart';
 import NavBar from './components/Navbar';
-import AdminNavBar from './components/AdminNavBar';
+import AdminNavBar from './components/AdminNavbar';
 import axios from 'axios';
 import './App.css';
 import Orders from './components/Orders';
@@ -26,6 +26,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [qyteti, setQyteti] = useState('');
   const [adresa, setAdresa] = useState('');
+  const [cartItemCount, setCartItemCount] = useState(0); // New state for item count
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -80,18 +81,27 @@ const App = () => {
   const addToCart = (item) => {
     setCartItems(prevItems => {
       const existingItem = prevItems.find(cartItem => cartItem.id === item._id);
+      let newItems;
       if (existingItem) {
-        return prevItems.map(cartItem =>
+        newItems = prevItems.map(cartItem =>
           cartItem.id === item._id ? { ...cartItem, quantity: cartItem.quantity + item.quantity } : cartItem
         );
       } else {
-        return [...prevItems, { id: item._id, quantity: item.quantity }];
+        newItems = [...prevItems, { id: item._id, quantity: item.quantity }];
       }
+      // Update item count
+      setCartItemCount(newItems.reduce((total, curr) => total + curr.quantity, 0));
+      return newItems;
     });
   };
 
   const removeFromCart = (id) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+    setCartItems(prevItems => {
+      const updatedItems = prevItems.filter(item => item.id !== id);
+      // Update item count
+      setCartItemCount(updatedItems.reduce((total, curr) => total + curr.quantity, 0));
+      return updatedItems;
+    });
   };
 
   const handleQuantityChange = (id, newQuantity) => {
@@ -111,11 +121,12 @@ const App = () => {
         }
       });
       if (response.status === 201) {
-        alert('Order placed successfully');
+        alert('Porosia u dergua');
         setCartItems([]);
         setQuantities({});
         setQyteti('');
         setAdresa('');
+        setCartItemCount(0); 
       } else {
         alert('Failed to place order');
       }
@@ -155,10 +166,21 @@ const App = () => {
         <Route path="/auth" element={<Auth setLoggedIn={setLoggedIn} setUser={setUser} />} />
         <Route path="/menu" element={loggedIn ? (
           <>
-            <NavBar loggedIn={loggedIn} user={user} handleLogout={handleLogout} setSearchTerm={setSearchTerm} />
+            <NavBar 
+              loggedIn={loggedIn} 
+              user={user} 
+              handleLogout={handleLogout} 
+              setSearchTerm={setSearchTerm} 
+              cartItemCount={cartItemCount} // Pass cart item count
+            />
             <div className="flex">
               <div className="w-2/3 p-4">
-                <FoodMenu addToCart={addToCart} searchTerm={searchTerm} handleQuantityChange={handleQuantityChange} quantities={quantities} />
+                <FoodMenu 
+                  addToCart={addToCart} 
+                  searchTerm={searchTerm} 
+                  handleQuantityChange={handleQuantityChange} 
+                  quantities={quantities} 
+                />
               </div>
             </div>
             <Footer /> 
@@ -176,7 +198,13 @@ const App = () => {
         )} />
         <Route path="/cart" element={loggedIn ? (
           <>
-            <NavBar loggedIn={loggedIn} user={user} handleLogout={handleLogout} setSearchTerm={setSearchTerm} />
+            <NavBar 
+              loggedIn={loggedIn} 
+              user={user} 
+              handleLogout={handleLogout} 
+              setSearchTerm={setSearchTerm} 
+              cartItemCount={cartItemCount} // Pass cart item count
+            />
             <Cart 
               cartItems={cartItems} 
               removeFromCart={removeFromCart} 
@@ -211,4 +239,3 @@ const App = () => {
 };
 
 export default App;
-

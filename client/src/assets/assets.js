@@ -367,10 +367,10 @@ export const food_list = [
     },
     {
         _id: "60d0fe4f5311236168a109e9",  // Example ObjectId
-        name: "Pjatë Meze",
+        name: "Noodle",
         image: food_32,
         price: 22,
-        description: "Përbërësit: perime të freskëta, humus, pita",
+        description: "Përbërësit: noodle, fileto pule, perime, salcë soje",
         category: "Pure Veg"
     }
 ]

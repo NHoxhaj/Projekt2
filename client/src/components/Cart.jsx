@@ -16,8 +16,8 @@ const Cart = ({ cartItems, removeFromCart, placeOrder, qyteti, setQyteti, adresa
 
 
   return (
-    <div className="food-menu">
-      <h2 id='menu'>Karta</h2>
+    <div className="food-menuu">
+      <h2 id='menuu'>Karta</h2>
       <ul className="space-y-2">
         {itemsInCart.map((item) => (
           <div key={item._id} className="food-item" id='dflex'>
@@ -53,7 +53,7 @@ const Cart = ({ cartItems, removeFromCart, placeOrder, qyteti, setQyteti, adresa
           onChange={(e) => setAdresa(e.target.value)}
         />
       </div>
-      <button id='order' onClick={placeOrder}>Dërgo Porosinë</button>
+      <button id='porosia' onClick={placeOrder}>Dërgo Porosinë</button>
     </div>
   );
 };

@@ -1,14 +1,14 @@
 const FoodItem = require('../models/foodItem.models');
 
 const createFoodItem = async (req, res) => {
-  const { name, description, price, imageUrl } = req.body;
+  const { name, description, price,quantity,category, imageUrl  } = req.body;
 
   if (!name || !description || !price || !imageUrl) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
-    const newFoodItem = new FoodItem({ name, description, price, imageUrl });
+    const newFoodItem = new FoodItem({ name, description, price,quantity,category, imageUrl });
     const savedFoodItem = await newFoodItem.save();
     return res.status(201).json(savedFoodItem);
   } catch (error) {
@@ -26,7 +26,7 @@ const getAllFoodItems = async (req, res) => {
 };
 
 const updateFoodItem = async (req, res) => {
-  const { name, description, price, imageUrl } = req.body;
+  const {name, description, price,quantity,category, imageUrl  } = req.body;
 
   if (!name || !description || !price || !imageUrl) {
     return res.status(400).json({ error: 'All fields are required' });
@@ -35,7 +35,7 @@ const updateFoodItem = async (req, res) => {
   try {
     const updatedFoodItem = await FoodItem.findByIdAndUpdate(
       req.params.id,
-      { name, description, price, imageUrl },
+      { name, description, price,quantity,category, imageUrl },
       { new: true, runValidators: true }
     );
     if (!updatedFoodItem) {
