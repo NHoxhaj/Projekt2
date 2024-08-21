@@ -5,7 +5,7 @@ import Auth from './components/Auth';
 import FoodMenu from './components/FoodMenu';
 import Cart from './components/Cart';
 import NavBar from './components/Navbar';
-import AdminNavBar from './components/AdminNavBar';
+import AdminNavBar from './components/AdminNavBarr';
 import axios from 'axios';
 import './App.css';
 import Orders from './components/Orders';
