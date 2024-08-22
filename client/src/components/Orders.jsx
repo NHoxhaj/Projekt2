@@ -51,11 +51,6 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
                 <p>Qyteti: {order.qyteti}</p>
                 <p>Adresa: {order.adresa}</p>
                 <p>Statusi: {order.status}</p>
-                <ul>
-                  {order.items.map((foodItem, itemIndex) => (
-                    <li key={itemIndex}>{foodItem.name} - Sasia: {foodItem.quantity || 1}</li>
-                  ))}
-                </ul>
               </li>
             ))}
           </ul>

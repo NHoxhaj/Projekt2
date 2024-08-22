@@ -6,10 +6,10 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
   const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
-    const filtered = food_list.filter(item =>
+    const filteredItems = food_list.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredItems(filtered);
+    setFilteredItems(filteredItems);
   }, [searchTerm]);
 
   const handleAddToCart = (item) => {

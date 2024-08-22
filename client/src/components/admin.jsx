@@ -83,11 +83,6 @@ const AdminOrders = () => {
                 <p>Qyteti: {order.qyteti}</p>
                 <p>Adresa: {order.adresa}</p>
                 <p>Statusi: {order.status}</p>
-                <ul>
-                  {order.items.map((FoodItem, index) => (
-                    <li key={index}>{FoodItem.name || 'Item'} - Sasia: {FoodItem.quantity || 1}</li>
-                  ))}
-                </ul>
                 <select
                   value={order.status}
                   onChange={(e) => handleStatusChange(order._id, e.target.value)}
