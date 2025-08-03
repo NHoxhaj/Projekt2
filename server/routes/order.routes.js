@@ -1,10 +1,9 @@
-const { createOrder, getOrderStatus, getAllOrders, deleteOrder, updateOrderStatus } = require('../controllers/order.controllers');
+const { createOrder,getOrderStatusById,getAllOrders, updateOrderStatusById } = require('../controllers/order.controller');
 const { authenticate } = require('../middleware/authenticate');
 
 module.exports = app => {
   app.post('/api/orders', authenticate, createOrder);
-  app.get('/api/orders', authenticate, getAllOrders);
-  app.get('/api/orders/:id/status', authenticate, getOrderStatus);
-  app.put('/api/orders/:id/status', authenticate, ); 
-  app.delete('/api/admin/orders/:id', deleteOrder);
+  app.get('/api/orders', authenticate,getAllOrders);
+  app.get('/order/:id/status', getOrderStatusById);
+  app.put('/order/:id/status', updateOrderStatusById);
 };

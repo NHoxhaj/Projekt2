@@ -1,8 +1,9 @@
 const Admin = require('../models/admin.model');
-const Order= require('../models/order.models');
-const Client= require('../models/user.models')
+const Order= require('../models/order.model');
+const Client= require('../models/user.model')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const secret = process.env.FIRST_SECRET_KEY;
 module.exports = {
   register: async (req, res) => {
     try {
@@ -47,8 +48,9 @@ login : async (req, res) => {
       return res.status(400).json("Incorrect password");
     }
 
-    const adminToken = jwt.sign({ id: admin._id, username: admin.username }, process.env.FIRST_SECRET_KEY);
-    res.cookie("admintoken", adminToken, { httpOnly: true }).json({  admin });
+    const adminToken = jwt.sign({ id: admin._id, role: 'admin' }, secret, { expiresIn: '1h' });
+res.cookie("admintoken", adminToken, { httpOnly: true }).json({ admin });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -75,7 +77,7 @@ checkAuth :async(req, res) => {
   },
   
 
-getAllClientsOrders: (req, res) => {
+getAllOrders: (req, res) => {
     Client.find()
       .populate('orders')
       .then(clients => res.json(clients))

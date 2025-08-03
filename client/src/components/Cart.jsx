@@ -1,19 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { food_list } from '../assets/assets';
-import axios from 'axios';
 
-
-const Cart = ({ cartItems, removeFromCart, placeOrder, qyteti, setQyteti, adresa, setAdresa }) => {
+const Cart = ({ cartItems, paymentMethod, setPaymentMethod, removeFromCart, placeOrder, qyteti, setQyteti, adresa, setAdresa }) => {
   const [itemsInCart, setItemsInCart] = useState([]);
+  const transportFee = 3; 
+
   useEffect(() => {
-    const selectedItems = food_list.filter(item => cartItems.some(cartItem => cartItem.id === item._id));
+    console.log("cartItems:", cartItems); 
+    
+    const selectedItems = food_list.filter(item => 
+      cartItems.some(cartItem => cartItem.foodItemId === item._id)
+    );
+    
     const itemsWithQuantities = selectedItems.map(item => {
-      const cartItem = cartItems.find(cartItem => cartItem.id === item._id);
+      const cartItem = cartItems.find(cartItem => cartItem.foodItemId === item._id);
       return { ...item, quantity: cartItem.quantity };
     });
+    
+    console.log("itemsWithQuantities:", itemsWithQuantities); 
+    
     setItemsInCart(itemsWithQuantities);
   }, [cartItems]);
 
+  const handlePlaceOrder = () => {
+    if (!qyteti || !paymentMethod || !adresa || itemsInCart.length === 0) {
+      alert('Të gjitha fushat e nevojshme duhet të plotësohen.');
+      return;
+    }
+    placeOrder({ qyteti, paymentMethod, adresa, items: itemsInCart });
+  };
+
+  const totalPrice = itemsInCart.reduce((total, item) => total + item.price * item.quantity, 0) + transportFee;
+
+  console.log("Current paymentMethod:", paymentMethod); 
 
   return (
     <div className="food-menuu">
@@ -29,13 +48,14 @@ const Cart = ({ cartItems, removeFromCart, placeOrder, qyteti, setQyteti, adresa
               <p>{item.description}</p>
               <label htmlFor="quantity">Sasia:</label>
               <p>{item.quantity}</p>
-              <p className="text-gray-600">${item.price.toFixed(2)}</p>
+              <p className="text-gray-600">Cmimi: ${item.price.toFixed(2)}</p>
               <button onClick={() => removeFromCart(item._id)} className="remove">Remove</button>
             </div>
           </div>
         ))}
       </ul>
-      <div className="form-group">
+      <p className="form-group">
+        <p>
         <label htmlFor="qyteti">Qyteti: </label>
         <input
           type="text"
@@ -43,8 +63,9 @@ const Cart = ({ cartItems, removeFromCart, placeOrder, qyteti, setQyteti, adresa
           value={qyteti}
           onChange={(e) => setQyteti(e.target.value)}
         />
-      </div>
-      <div className="form-group">
+      
+      </p>
+      <p>
         <label htmlFor="adresa">Adresa:</label>
         <input
           type="text"
@@ -52,11 +73,42 @@ const Cart = ({ cartItems, removeFromCart, placeOrder, qyteti, setQyteti, adresa
           value={adresa}
           onChange={(e) => setAdresa(e.target.value)}
         />
+        </p>
+      </p>
+      <p className="form-group">
+        <p>
+        <label htmlFor="paymentMethod">Metoda e pagesës: </label>
+        </p>
+        <p>
+          <input
+            type="radio"
+            id="Cash"
+            name="paymentMethod"
+            value="Cash"
+            checked={paymentMethod === 'Cash'}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          />
+          <label htmlFor="Cash"> Cash</label>
+          </p>
+          <p>
+          <input
+            type="radio"
+            id="creditCard"
+            name="paymentMethod"
+            value="CreditCard"
+            checked={paymentMethod === 'CreditCard'}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          />
+          <label htmlFor="creditCard"> Credit Card </label>
+          </p>
+      
+      </p>
+      <div className="total-price">
+        <h5>Cmimi total (përfshirë transportin): {totalPrice.toFixed(2)} euro</h5>
       </div>
-      <button id='porosia' onClick={placeOrder}>Dërgo Porosinë</button>
+      <button id='porosia' onClick={handlePlaceOrder}>Dërgo Porosinë</button>
     </div>
   );
 };
 
 export default Cart;
-

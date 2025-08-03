@@ -1,8 +1,6 @@
-const FoodItemController = require('../controllers/foodItem.controllers');
+const FoodItemController = require('../controllers/foodItem.controller');
 
 module.exports = app => {
   app.post('/api/foodItems', FoodItemController.createFoodItem);
   app.get('/api/foodItems', FoodItemController.getAllFoodItems);
-  app.put('/api/foodItems/:id', FoodItemController.updateFoodItem);
-  app.delete('/api/foodItems/:id', FoodItemController.deleteFoodItem);
 };

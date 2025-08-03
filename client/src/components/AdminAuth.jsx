@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import image from '../assets/image.png';
+import blu from '../assets/blu.png';
 import '../App.css';
+
 
 const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
   const [isAdminLogin, setIsAdminLogin] = useState(true);
@@ -52,7 +53,7 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
   return (
     <div className="auth-container">
       <div className="auth-content">
-        <div className={`auth-form ${isAdminLogin ? 'login-active' : 'register-active'}`}>
+        <div className={`auth-formA ${isAdminLogin ? 'login-active' : 'register-active'}`}>
           <h2 className="auth-title">{isAdminLogin ? 'Login' : 'Register'}</h2>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit} className="form-content">
@@ -94,19 +95,14 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
                 className="input-field"
               />
             )}
-            <button type="submit" className="submit-button">
+            <button type="submit" className="submit-buttonA">
               {isAdminLogin ? 'Logohu' : 'Rregjistrohu'}
             </button>
           </form>
         </div>
-        <div className={`auth-toggle-container ${isAdminLogin ? 'toggle-left' : 'toggle-right'}`}>
-        <div><img src={image} alt="logo" className="logo" /> </div>
-          <p onClick={() => setIsAdminLogin(!isAdminLogin)}>
-            {isAdminLogin ? 'Nuk e ke nje llogari? ' : 'E ke tashme nje llogari? '}
-          </p>
-          <button onClick={() => setIsAdminLogin(!isAdminLogin)} className="toggle-button">
-            {isAdminLogin ? ' Rregjistrohu' : ' Logohu'}
-          </button>
+        <div className={`auth-toggle-containerA ${isAdminLogin ? 'toggle-left' : 'toggle-right'}`}>
+        <div><img src={blu} alt="logo" className="logoblu" /> </div>
+        
         </div>
       </div>
     </div>

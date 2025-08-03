@@ -12,6 +12,10 @@ import Orders from './components/Orders';
 import AdminAuth from './components/AdminAuth';
 import AdminOrders from './components/admin';
 import Footer from './components/Footer';
+import EarningsPage from './components/EarningsPage';
+import AdminUsers from './components/AdminUserOrders';
+import Stat from './components/Stat';
+import UserOrderHistory from './components/OrderHistory';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 axios.defaults.withCredentials = true;
@@ -26,7 +30,9 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [qyteti, setQyteti] = useState('');
   const [adresa, setAdresa] = useState('');
-  const [cartItemCount, setCartItemCount] = useState(0); // New state for item count
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [cartItemCount, setCartItemCount] = useState(0); 
+
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -78,64 +84,103 @@ const App = () => {
     }
   };
 
-  const addToCart = (item) => {
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(cartItem => cartItem.id === item._id);
-      let newItems;
-      if (existingItem) {
-        newItems = prevItems.map(cartItem =>
-          cartItem.id === item._id ? { ...cartItem, quantity: cartItem.quantity + item.quantity } : cartItem
-        );
-      } else {
-        newItems = [...prevItems, { id: item._id, quantity: item.quantity }];
-      }
-      // Update item count
-      setCartItemCount(newItems.reduce((total, curr) => total + curr.quantity, 0));
-      return newItems;
-    });
-  };
+const addToCart = (item) => {
+  setCartItems((prevItems) => {
+    const existingItem = prevItems.find((cartItem) => cartItem.foodItemId === item._id);
 
-  const removeFromCart = (id) => {
-    setCartItems(prevItems => {
-      const updatedItems = prevItems.filter(item => item.id !== id);
-      // Update item count
-      setCartItemCount(updatedItems.reduce((total, curr) => total + curr.quantity, 0));
-      return updatedItems;
-    });
-  };
+    if (existingItem) {
+      return prevItems.map((cartItem) =>
+        cartItem.foodItemId === item._id
+          ? { ...cartItem, quantity: cartItem.quantity + item.quantity } // <- Use incoming quantity
+          : cartItem
+      );
+    } else {
+      return [
+        ...prevItems,
+        {
+          foodItemId: item._id,
+          name: item.name,
+          description: item.description,
+          price: item.price,
+          image: item.image,
+          quantity: item.quantity || 1, // <- Use quantity passed in
+        },
+      ];
+    }
+  });
+
+  setCartItemCount((prevCount) => prevCount + item.quantity || 1);
+};
+
+
+const removeFromCart = (id) => {
+  setCartItems(prevItems => {
+    const updatedItems = prevItems.filter(item => item.foodItemId !== id); 
+    setCartItemCount(updatedItems.reduce((total, curr) => total + curr.quantity, 0));
+    return updatedItems;
+  });
+};
+
 
   const handleQuantityChange = (id, newQuantity) => {
     setQuantities(prevQuantities => ({ ...prevQuantities, [id]: newQuantity }));
   };
 
   const placeOrder = async () => {
+    if (cartItems.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+  
+    if (!qyteti || !adresa) {
+      alert('Please provide both city and address.');
+      return;
+    }
+  
     try {
-      const response = await axios.post('http://localhost:8000/api/orders', {
-        items: cartItems.map(item => ({ id: item.id, quantity: item.quantity })),
+      if (!user || !user._id) {
+        throw new Error("User is not logged in.");
+      }
+  
+      const orderPayload = {
+        userId: user._id, 
+        items: cartItems.map((item) => ({
+          foodItemId: item.foodItemId,
+          name: item.name,
+          description:item.description,
+          image: item.image,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        totalPrice: cartItems.reduce((total, item) => total +3+ item.quantity * item.price, 0),
         qyteti,
         adresa,
-        orderNumber: `ORD-${Date.now()}`
-      }, {
+         orderNumber: `ORD-${Date.now()}`,
+        paymentMethod,
+      };
+  
+      const response = await axios.post('http://localhost:8000/api/orders', orderPayload, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
+  
       if (response.status === 201) {
-        alert('Porosia u dergua');
+        alert('Order placed successfully!');
         setCartItems([]);
-        setQuantities({});
+        setCartItemCount(0);
         setQyteti('');
         setAdresa('');
-        setCartItemCount(0); 
-      } else {
-        alert('Failed to place order');
+        setPaymentMethod('');
       }
     } catch (err) {
-      console.error('Error placing order:', err);
-      alert('An unexpected error occurred');
+      console.error('Error placing order:', err.response?.data?.message || err.message);
+      alert(`Error placing order: ${err.response?.data?.message || err.message}`);
     }
   };
+  
 
+  
   const handleLogout = async () => {
     try {
       await axios.get('http://localhost:8000/api/logout');
@@ -146,7 +191,6 @@ const App = () => {
       alert('An unexpected error occurred');
     }
   };
-
   const handleAdminLogout = async () => {
     try {
       await axios.get('http://localhost:8000/api/admin/logout');
@@ -171,7 +215,7 @@ const App = () => {
               user={user} 
               handleLogout={handleLogout} 
               setSearchTerm={setSearchTerm} 
-              cartItemCount={cartItemCount} // Pass cart item count
+              cartItemCount={cartItemCount}
             />
             <div className="flex">
               <div className="w-2/3 p-4">
@@ -190,8 +234,41 @@ const App = () => {
         )} />
         <Route path="/admin/orders" element={adminLoggedIn ? (
           <>
-            <AdminNavBar handleLogout={handleAdminLogout} />
+            <AdminNavBar handleAdminLogout={handleAdminLogout} />
             <AdminOrders adminLoggedIn={adminLoggedIn} admin={admin} />
+          </>
+        ) : (
+          <Navigate to="/AdminAuth" />
+        )} />
+         <Route path="/admin/users" element={adminLoggedIn ? (
+          <>
+            <AdminNavBar handleAdminLogout={handleAdminLogout} />
+            <AdminUsers />
+          </>
+        ) : (
+          <Navigate to="/AdminAuth" />
+        )} />
+         <Route path="/admin/earnings" element={adminLoggedIn ? (
+          <>
+            <AdminNavBar handleAdminLogout={handleAdminLogout} />
+            <EarningsPage />
+          </>
+        ) : (
+          <Navigate to="/AdminAuth" />
+        )} />
+       
+         <Route path="/admin/users/:userId/orders" element={adminLoggedIn ? (
+          <>
+            <AdminNavBar handleAdminLogout={handleAdminLogout} />
+            <UserOrderHistory />
+          </>
+        ) : (
+          <Navigate to="/AdminAuth" />
+        )} />
+              <Route path="/admin/stat" element={adminLoggedIn ? (
+          <>
+            <AdminNavBar handleAdminLogout={handleAdminLogout} />
+            <Stat />
           </>
         ) : (
           <Navigate to="/AdminAuth" />
@@ -213,6 +290,8 @@ const App = () => {
               setQyteti={setQyteti}
               adresa={adresa}
               setAdresa={setAdresa}
+              paymentMethod={paymentMethod}
+              setPaymentMethod={setPaymentMethod}
             />
           </>
         ) : (

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { food_list } from '../assets/assets';
-import food from '../assets/foodd.webp'
+
 
 const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
+
   useEffect(() => {
-    const filteredItems = food_list.filter(item =>
+    const Items = food_list.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredItems(filteredItems);
+    setFilteredItems(Items);
   }, [searchTerm]);
 
   const handleAddToCart = (item) => {
@@ -20,13 +21,12 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
 
   return (
     <div className="food-menu-container">
-
       <h1 id='menu'>Menu</h1>
       <div className="food-menu">
         {filteredItems.map(item => (
           <div key={item._id} className="food-item">
-            <div id='dflex'>
-              <div>
+            <div >
+              <div id='dflex'>
                 <h3>{item.name}</h3>
                 <img id='img' src={item.image} alt={item.name} />
               </div>
@@ -34,7 +34,7 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
                 <p>{item.description}</p>
                 <label id='cmimi' htmlFor="price">Cmimi:</label>
                 <p>${item.price.toFixed(2)}</p>
-                <label>Sasia:</label>
+                <label id='sasia'>Sasia:</label>
                 <input
                   type="number"
                   min="1"

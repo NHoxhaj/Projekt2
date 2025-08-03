@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-
 import { useNavigate } from 'react-router-dom';
 
 const AdminLogin = ({ setAdminLoggedIn, setAdmin }) => {
@@ -10,8 +8,8 @@ const AdminLogin = ({ setAdminLoggedIn, setAdmin }) => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { email, value } = e.target;
-    setCredentials({ ...credentials, [email]: value });
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -37,12 +35,31 @@ const AdminLogin = ({ setAdminLoggedIn, setAdmin }) => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
+      <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
-        <button type="submit" className="w-full bg-blue-500 text-white px-3 py-2 rounded">Login</button>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border rounded"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+          className="w-full px-3 py-2 border rounded"
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white px-3 py-2 rounded"
+        >
+          Login
+        </button>
       </form>
     </div>
   );
