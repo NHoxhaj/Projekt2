@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Home from './components/Home';
 import Auth from './components/Auth';
 import FoodMenu from './components/FoodMenu';
 import Cart from './components/Cart';
 import NavBar from './components/Navbar';
-import AdminNavBar from './components/AdminNavBarr';
 import axios from 'axios';
 import './App.css';
 import Orders from './components/Orders';
-import AdminAuth from './components/AdminAuth';
-import AdminOrders from './components/admin';
 import Footer from './components/Footer';
-import EarningsPage from './components/EarningsPage';
-import AdminUsers from './components/AdminUserOrders';
-import Stat from './components/Stat';
-import UserOrderHistory from './components/OrderHistory';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 axios.defaults.withCredentials = true;
@@ -25,8 +17,6 @@ const App = () => {
   const [quantities, setQuantities] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
-  const [admin, setAdmin] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [qyteti, setQyteti] = useState('');
   const [adresa, setAdresa] = useState('');
@@ -49,20 +39,7 @@ const App = () => {
     checkLoginStatus();
   }, []);
 
-  useEffect(() => {
-    const checkAdminLoginStatus = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/adminCheckAuth', { withCredentials: true });
-        if (response.status === 200) {
-          setAdminLoggedIn(true);
-          setAdmin(response.data.admin);
-        }
-      } catch (err) {
-        handleAdminAuthError(err);
-      }
-    };
-    checkAdminLoginStatus();
-  }, []);
+
 
   const handleAuthError = (err) => {
     if (err.response && err.response.status === 401) {
@@ -74,15 +51,7 @@ const App = () => {
     }
   };
 
-  const handleAdminAuthError = (err) => {
-    if (err.response && err.response.status === 401) {
-      setAdminLoggedIn(false);
-      setAdmin(null);
-      console.error('Unauthorized: Please log in');
-    } else {
-      console.error('Error checking login status:', err);
-    }
-  };
+  
 
 const addToCart = (item) => {
   setCartItems((prevItems) => {
@@ -91,7 +60,7 @@ const addToCart = (item) => {
     if (existingItem) {
       return prevItems.map((cartItem) =>
         cartItem.foodItemId === item._id
-          ? { ...cartItem, quantity: cartItem.quantity + item.quantity } // <- Use incoming quantity
+          ? { ...cartItem, quantity: cartItem.quantity + item.quantity } 
           : cartItem
       );
     } else {
@@ -103,7 +72,7 @@ const addToCart = (item) => {
           description: item.description,
           price: item.price,
           image: item.image,
-          quantity: item.quantity || 1, // <- Use quantity passed in
+          quantity: item.quantity || 1, 
         },
       ];
     }
@@ -191,22 +160,12 @@ const removeFromCart = (id) => {
       alert('An unexpected error occurred');
     }
   };
-  const handleAdminLogout = async () => {
-    try {
-      await axios.get('http://localhost:8000/api/admin/logout');
-      setAdminLoggedIn(false);
-      setAdmin(null);
-    } catch (err) {
-      console.error('Error logging out:', err);
-      alert('An unexpected error occurred');
-    }
-  };
+
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/AdminAuth" element={<AdminAuth setAdminLoggedIn={setAdminLoggedIn} setAdmin={setAdmin} />} />
+  
         <Route path="/auth" element={<Auth setLoggedIn={setLoggedIn} setUser={setUser} />} />
         <Route path="/menu" element={loggedIn ? (
           <>
@@ -232,47 +191,6 @@ const removeFromCart = (id) => {
         ) : (
           <Navigate to="/auth" />
         )} />
-        <Route path="/admin/orders" element={adminLoggedIn ? (
-          <>
-            <AdminNavBar handleAdminLogout={handleAdminLogout} />
-            <AdminOrders adminLoggedIn={adminLoggedIn} admin={admin} />
-          </>
-        ) : (
-          <Navigate to="/AdminAuth" />
-        )} />
-         <Route path="/admin/users" element={adminLoggedIn ? (
-          <>
-            <AdminNavBar handleAdminLogout={handleAdminLogout} />
-            <AdminUsers />
-          </>
-        ) : (
-          <Navigate to="/AdminAuth" />
-        )} />
-         <Route path="/admin/earnings" element={adminLoggedIn ? (
-          <>
-            <AdminNavBar handleAdminLogout={handleAdminLogout} />
-            <EarningsPage />
-          </>
-        ) : (
-          <Navigate to="/AdminAuth" />
-        )} />
-       
-         <Route path="/admin/users/:userId/orders" element={adminLoggedIn ? (
-          <>
-            <AdminNavBar handleAdminLogout={handleAdminLogout} />
-            <UserOrderHistory />
-          </>
-        ) : (
-          <Navigate to="/AdminAuth" />
-        )} />
-              <Route path="/admin/stat" element={adminLoggedIn ? (
-          <>
-            <AdminNavBar handleAdminLogout={handleAdminLogout} />
-            <Stat />
-          </>
-        ) : (
-          <Navigate to="/AdminAuth" />
-        )} />
         <Route path="/cart" element={loggedIn ? (
           <>
             <NavBar 
@@ -280,7 +198,7 @@ const removeFromCart = (id) => {
               user={user} 
               handleLogout={handleLogout} 
               setSearchTerm={setSearchTerm} 
-              cartItemCount={cartItemCount} // Pass cart item count
+              cartItemCount={cartItemCount} 
             />
             <Cart 
               cartItems={cartItems} 

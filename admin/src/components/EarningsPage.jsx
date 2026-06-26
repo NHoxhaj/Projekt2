@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto'; 
-import { CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';  // Necessary Chart.js components
-import AdminNavBar from './AdminNavBarr';
+import { CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';  
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -102,16 +101,24 @@ const EarningsPage = () => {
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
-      x: { beginAtZero: true, title: { display: true, text: 'Time Period' } },
+      x: {
+        beginAtZero: true,
+        title: { display: true, text: 'Time Period' },
+        ticks: {
+          autoSkip: true,
+          maxRotation: 0,
+          maxTicksLimit: 8,
+        },
+      },
       y: { beginAtZero: true, title: { display: true, text: 'Earnings (in EUR)' } }
     }
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <AdminNavBar />
-      <div style={{ marginLeft: '250px', padding: '20px', flexGrow: 1 }}>
+    <div className="admin-content-page earnings-page">
         <div className="filter-navbar">
           <button className='aaa' onClick={() => setPeriod('daily')}>Ditore  <ExpandMoreIcon style={{ color: 'white', fontSize: '30px', marginLeft: '5px' }} /></button>
           <button className='aaa' onClick={() => setPeriod('weekly')}>Javore  <ExpandMoreIcon style={{ color: 'white', fontSize: '30px', marginLeft: '5px' }} /></button>
@@ -123,7 +130,7 @@ const EarningsPage = () => {
             <div id='dflex' >
              <div className='grafiku'>
              <p id='pershkrimi'>Te ardhurat ditore nga shitjet</p>
-            <div id='grafik'>
+            <div className='sales-chart-frame'>
               <Line data={dailyChartData} options={options} /></div>
             </div>
             <div id='cards'> <div id='card'><h5>Të ardhurat ditore: </h5><p>{totalHourlyEarnings} euro</p> </div>
@@ -134,7 +141,7 @@ const EarningsPage = () => {
           <div id='dflex' >
           <div className='grafiku'>
           <p id='pershkrimi'>Te ardhurat javore nga shitjet</p>
-  <div id='grafik'>
+  <div className='sales-chart-frame'>
     <Line data={weeklyChartData} options={options} /></div></div>
     <div id='cards' style={{ justifyContent: 'space-around', marginTop: '20px' }}>
       <div id="card">
@@ -154,7 +161,7 @@ const EarningsPage = () => {
   <div id='dflex'>
     <div className='grafiku'>
       <p id='pershkrimi'>Të ardhurat mujore nga shitjet</p>
-      <div id='grafik'>
+      <div className='sales-chart-frame'>
         <Line data={monthlyChartData} options={options} />
       </div>
     </div>
@@ -175,7 +182,7 @@ const EarningsPage = () => {
   <div id='dflex'>
     <div className='grafiku'>
       <p id='pershkrimi'>Të ardhurat vjetore nga shitjet</p>
-      <div id='grafik'>
+      <div className='sales-chart-frame'>
         <Line data={yearlyChartData} options={options} />
       </div>
     </div>
@@ -193,7 +200,6 @@ const EarningsPage = () => {
 )}
 
         </div>
-      </div>
     </div>
   );
 };

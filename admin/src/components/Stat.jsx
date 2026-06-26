@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2';
-import AdminNavBar from './AdminNavBarr';
 
 const Stat = () => {
   const [topProducts, setTopProducts] = useState([]);
@@ -80,18 +79,25 @@ const Stat = () => {
     ]
   };
 
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
   return (
-    <div style={{ display: 'flex' }}>
-      <AdminNavBar />
-      <div style={{ marginLeft: '100px', padding: '20px', flexGrow: 1 }}>
+    <div className="admin-content-page stat-page">
         <div className="pie-charts" id='dflex'>
-          <div id="pie-chart">
+          <div className="stat-chart-card">
             <h4>Shpërndarja e porosive sipas qytetit</h4>
-            <Pie data={pieData} />
+            <div className="stat-chart-body">
+              <Pie data={pieData} options={chartOptions} />
+            </div>
           </div>
-          <div id="pie-chart">
+          <div className="stat-chart-card">
             <h4>Shpërndarja sipas metodës së pagesës</h4>
-            <Pie data={paymentPieData} />
+            <div className="stat-chart-body">
+              <Pie data={paymentPieData} options={chartOptions} />
+            </div>
           </div>
         </div>
         <div id='dflex'>
@@ -128,7 +134,6 @@ const Stat = () => {
           </ul>
         </div>
         </div> 
-      </div>
     </div>
   );
 };

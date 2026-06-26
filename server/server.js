@@ -10,7 +10,10 @@ const app = express();
 app.use(cookieParser());
 app.use(cors({ 
   credentials: true, 
-  origin: ['http://localhost:5173'] 
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5174'
+  ] 
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,22 +23,15 @@ require('./routes/foodItem.routes')(app);
 require('./routes/order.routes')(app);
 require('./routes/admin.routes')(app);
 
-const buildPath = path.join(__dirname, '../client/dist');
-app.use(express.static(buildPath));
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'), (err) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
-});
 
 const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:5174'
+    ],
     methods: ['GET', 'POST'],
     credentials: true,
   }

@@ -67,10 +67,10 @@ const AdminUsers = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="admin-page" style={{ display: 'flex',marginLeft:'250px', height: '100vh' }}>
+    <div className="admin-page admin-content-page">
       
 
-      <div className="main-content" style={{ flexGrow: 1, padding: '20px' }}>
+      <div className="main-content">
         <div className="filter-navbar">
           <button onClick={() => setFilterType('oneTime')} className="aaa">
             One-time Buyers  <ExpandMoreIcon style={{ color: 'white', fontSize: '30px', marginLeft: '5px' }} />

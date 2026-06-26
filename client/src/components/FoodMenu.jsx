@@ -36,6 +36,7 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
                 <p>${item.price.toFixed(2)}</p>
                 <label id='sasia'>Sasia:</label>
                 <input
+                id='input-line'
                   type="number"
                   min="1"
                   value={quantities[item._id] || 1}

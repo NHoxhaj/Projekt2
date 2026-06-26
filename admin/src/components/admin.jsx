@@ -4,6 +4,7 @@ import { Box} from '@mui/material';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [activeOrderGroup, setActiveOrderGroup] = useState('Pending');
   const [open, setOpen] = useState(false); 
   const [newOrder, setNewOrder] = useState({
     qyteti: '',
@@ -63,6 +64,11 @@ const AdminOrders = () => {
   const pendingOrders = orders.filter(order => order.status === 'Pending');
   const cookingOrders = orders.filter(order => order.status === 'Cooking');
   const finishedOrders = orders.filter(order => order.status === 'Finished');
+  const orderGroups = [
+    { status: 'Pending', title: 'Pending', id: 'pending', className: 'order-list1', orders: pendingOrders },
+    { status: 'Cooking', title: 'Cooking', id: 'cooking', className: 'order-list2', orders: cookingOrders },
+    { status: 'Finished', title: 'Finished', id: 'finished', className: 'order-list3', orders: finishedOrders },
+  ];
 
   const renderOrderList = (orderList) => (
     <ul>
@@ -104,25 +110,35 @@ const AdminOrders = () => {
   
 
   return (
-    <div className="ordersContainer" style={{ marginLeft: '250px', padding: '20px' }}>
+    <div className="ordersContainer admin-content-page">
       <div id='titulli'>
       <Box display="flex" alignItems="center">
         <h1 id='title'>Porositë</h1>
       </Box></div>
 
+      <div className="order-mobile-filter" aria-label="Zgjidh kategorine e porosive">
+        {orderGroups.map((group) => (
+          <button
+            key={group.status}
+            type="button"
+            className={activeOrderGroup === group.status ? 'active' : ''}
+            onClick={() => setActiveOrderGroup(group.status)}
+          >
+            {group.title}
+          </button>
+        ))}
+      </div>
+
       <div className="order-lists">
-        <div className="order-list1">
-          <h2 id='pending'>Pending</h2>
-          {renderOrderList(pendingOrders)}
-        </div>
-        <div className="order-list2">
-          <h2 id='cooking'>Cooking</h2>
-          {renderOrderList(cookingOrders)}
-        </div>
-        <div className="order-list3">
-          <h2 id='finished'>Finished</h2>
-          {renderOrderList(finishedOrders)}
-        </div>
+        {orderGroups.map((group) => (
+          <div
+            key={group.status}
+            className={`${group.className} order-group ${activeOrderGroup === group.status ? 'active' : ''}`}
+          >
+            <h2 id={group.id}>{group.title}</h2>
+            {renderOrderList(group.orders)}
+          </div>
+        ))}
       </div>
 
     </div>

@@ -31,7 +31,7 @@ const UserOrderHistory = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="user-order-history" style={{ marginLeft: '250px', padding: '20px' }}>
+    <div className="user-order-history admin-content-page">
       <h1>Historiku i porosive</h1>
       <ul>
         {orders.map(order => (

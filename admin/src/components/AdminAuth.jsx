@@ -4,7 +4,6 @@ import axios from 'axios';
 import blu from '../assets/blu.png';
 import '../App.css';
 
-
 const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
   const [isAdminLogin, setIsAdminLogin] = useState(true);
   const [formData, setFormData] = useState({

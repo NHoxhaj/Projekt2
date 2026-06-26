@@ -1,27 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Box, List, ListItem, ListItemText, ListItemIcon, Typography } from '@mui/material';
-import { Home, AttachMoney, Group, Logout, PieChart } from '@mui/icons-material';
+import { Close, Home, AttachMoney, Group, Logout, Menu, PieChart } from '@mui/icons-material';
 
 const AdminNavBar = ({ handleAdminLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleNavigation = (path) => {
     navigate(path);
+    setMenuOpen(false);
   };
 
   const handleLogoutClick = async () => {
-    await handleAdminLogout();
+    if (handleAdminLogout) {
+      await handleAdminLogout();
+    }
+    setMenuOpen(false);
     navigate('/AdminAuth');
   };
 
   const isActive = (path) => location.pathname === path;
 
   return ( 
+    <>
+    <button
+      className="admin-menu-toggle"
+      type="button"
+      onClick={() => setMenuOpen(true)}
+      aria-label="Open admin menu"
+    >
+      <Menu />
+      <span>Menu</span>
+    </button>
     <Box
-className="sidebar"
+className={`sidebar ${menuOpen ? 'sidebar-open' : ''}`}
   >
+      <button
+        className="admin-menu-close"
+        type="button"
+        onClick={() => setMenuOpen(false)}
+        aria-label="Close admin menu"
+      >
+        <Close />
+      </button>
+
       <Typography variant="h3" sx={{ fontSize: '24px',fontWeight:"bold", marginBottom: '40px', color: 'white', textAlign: 'center' }}>
        Admin Dashboard
       </Typography>
@@ -92,7 +116,7 @@ className="sidebar"
 
       <ListItem
         button
-        onClick={handleAdminLogout}
+        onClick={handleLogoutClick}
         sx={{
           backgroundColor: isActive('/AdminAuth') ? '#2e4dd6' : 'transparent',
           '&:hover': { backgroundColor: '#2e4dd6' },
@@ -105,6 +129,7 @@ className="sidebar"
         <ListItemText primary="Logout" />
       </ListItem>
     </Box>
+    </>
   );
 };
 

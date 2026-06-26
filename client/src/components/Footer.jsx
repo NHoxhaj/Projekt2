@@ -3,25 +3,28 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-light py-4">
-      <Container>
+    <div id='footer'>
+    <footer className="bg-dark text-center  py-4"   style={{
+    background: "linear-gradient(90deg, #000000, #441b01bb, #050300)"
+  }}>
+      <Container >
         <Row>
           <Col md={4}>
-            <h5>Rreth nesh</h5>
+            <h6 style={{color: "white"}}>Rreth nesh</h6>
             <p>Ne jemi nje kompani lider ne tregun e ushqimeve dhe food-delivery. Misioni jone eshte t'u ofrojme klienteve tane nje sherbim korrekt dhe cilesor.</p>
           </Col>
           <Col md={4}>
-            <h5>Na kontaktoni</h5>
+            <h6 style={{color: "white"}}>Na kontaktoni</h6>
             <p>Email: contact@foodish.com</p>
             <p>Phone: +355 *** *** ***</p>
             <p>Adresa: Rr.*** Tirane, Shqiperi</p>
           </Col>
           <Col md={4}>
-            <h5>Na ndiqni</h5>
-            <p>
-              <a href="#" className="text-light">Facebook</a><br />
-              <a href="#" className="text-light">Twitter</a><br />
-              <a href="#" className="text-light">Instagram</a>
+            <h6 style={{color: "white"}}>Na ndiqni</h6>
+            <p >
+              <a href="#" style={{color: "orange"}} >Facebook</a><br />
+              <a href="#" style={{color: "orange"}} >Twitter</a><br />
+              <a href="#" style={{color: "orange"}} >Instagram</a>
             </p>
           </Col>
         </Row>
@@ -32,6 +35,7 @@ const Footer = () => {
         </Row>
       </Container>
     </footer>
+    </div>
   );
 };
 
