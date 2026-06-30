@@ -3,14 +3,21 @@ const Admin = require("../models/admin.model");
 const Order = require("../models/order.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { cookieOptions } = require('../config/security.config');
 require('dotenv').config();
 const secret = process.env.FIRST_SECRET_KEY;
+
+const sanitizeUser = (user) => {
+  const plainUser = user.toObject ? user.toObject() : user;
+  const { password, confirmPassword, __v, ...safeUser } = plainUser;
+  return safeUser;
+};
 
 module.exports.register = async (req, res) => {
   try {
     const user = await User.create(req.body);
     const userToken = jwt.sign({ id: user._id, firstName: user.firstName }, process.env.FIRST_SECRET_KEY);
-    res.cookie("usertoken", userToken, { httpOnly: true }).json({ msg: "Registration successful!", user });
+    res.cookie("usertoken", userToken, cookieOptions).json({ msg: "Registration successful!", user: sanitizeUser(user) });
   } catch (err) {
     console.error(err); 
     res.status(400).json({ err });
@@ -20,11 +27,8 @@ module.exports.register = async (req, res) => {
 module.exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-  console.log('User login request received:', req.body);
-
   try {
     const user = await User.findOne({ email });
-    console.log('User found in DB:', user);
 
     if (!user) {
       return res.status(400).json({ error: "Email not found" });
@@ -35,8 +39,8 @@ module.exports.login = async (req, res) => {
       return res.status(400).json({ error: "Incorrect password" });
     }
     const token = jwt.sign({ id: user._id, role: 'user' }, secret, { expiresIn: '1h' });
-    res.clearCookie('usertoken');
-    res.cookie("usertoken", token, { httpOnly: true }).json({ user });
+    res.clearCookie('usertoken', cookieOptions);
+    res.cookie("usertoken", token, cookieOptions).json({ user: sanitizeUser(user) });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -44,7 +48,7 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('usertoken');
+  res.clearCookie('usertoken', cookieOptions);
   res.sendStatus(200);
 };
 
@@ -66,7 +70,7 @@ module.exports.checkAuth = (req, res) => {
 
 exports.getAllUsersWithOrders = async (req, res) => {
   try {
-    const users = await User.find({}).lean();
+    const users = await User.find({}).select('-password -__v').lean();
     const usersWithOrders = await Promise.all(
       users.map(async (user) => {
         const orders = await Order.find({ userId: user._id }).lean();

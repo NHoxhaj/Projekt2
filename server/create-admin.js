@@ -1,27 +1,25 @@
 const mongoose = require('mongoose');
-const Admin = require('./models/admin.model'); // adjust path if needed
-
-// Replace with your actual MongoDB connection string
-const MONGO_URI = 'mongodb://localhost:27017/your-db-name';
+const Admin = require('./models/admin.model');
+require('dotenv').config();
+const MONGO_URI = process.env.MONGODB_URI;
+const email = process.env.ADMIN_EMAIL;
+const password = process.env.ADMIN_PASSWORD;
 
 const createAdmin = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    if (!MONGO_URI || !email || !password) {
+      throw new Error('MONGODB_URI, ADMIN_EMAIL, and ADMIN_PASSWORD are required');
+    }
 
-    const email = 'admin@gmail.com';
-    const password = 'admin123';
+    await mongoose.connect(MONGO_URI);
 
-    // Check if admin already exists
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
       console.log('Admin already exists');
       process.exit(0);
     }
 
-    const newAdmin = new Admin({ email, password });
+    const newAdmin = new Admin({ email, password, confirmPassword: password });
     await newAdmin.save();
 
     console.log('Admin created successfully!');

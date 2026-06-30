@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { apiUrl } from '../config/api';
 
 const UserOrderHistory = () => {
   const { userId } = useParams(); 
@@ -11,11 +12,7 @@ const UserOrderHistory = () => {
   useEffect(() => {
     const fetchUserOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/admin/users/${userId}/orders`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+        const response = await axios.get(apiUrl(`/api/admin/users/${userId}/orders`), { withCredentials: true });
         setOrders(response.data);
         setLoading(false);
       } catch (err) {

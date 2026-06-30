@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto'; 
 import { CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';  
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { apiUrl } from '../config/api';
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const EarningsPage = () => {
@@ -24,7 +25,7 @@ const EarningsPage = () => {
   useEffect(() => {
     const fetchEarnings = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/admin/earnings?period=${period}`);
+        const response = await axios.get(apiUrl(`/api/admin/earnings?period=${period}`), { withCredentials: true });
         if (response.data) {
           if (period === 'daily') {
             setHourlyData(response.data.hourlyEarnings || []);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box} from '@mui/material';
+import { apiUrl } from '../config/api';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -17,7 +18,7 @@ const AdminOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/admin/orders', {
+        const response = await axios.get(apiUrl('/api/admin/orders'), {
           withCredentials: true,
         });
         const sortedOrders = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -34,7 +35,7 @@ const AdminOrders = () => {
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       await axios.put(
-        `http://localhost:8000/api/admin/orders/${orderId}`,
+        apiUrl(`/api/admin/orders/${orderId}`),
         { status: newStatus },
         { withCredentials: true }
       );
@@ -51,7 +52,7 @@ const AdminOrders = () => {
   const handleDelete = async (orderId) => {
   
       try {
-        await axios.delete(`http://localhost:8000/api/admin/orders/${orderId}`, {
+        await axios.delete(apiUrl(`/api/admin/orders/${orderId}`), {
           withCredentials: true,
         });
         setOrders(orders.filter(order => order._id !== orderId));

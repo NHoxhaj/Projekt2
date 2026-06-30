@@ -1,25 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { food_list } from '../assets/assets';
+import { assetUrl } from '../config/api';
 
 const Cart = ({ cartItems, paymentMethod, setPaymentMethod, removeFromCart, placeOrder, qyteti, setQyteti, adresa, setAdresa }) => {
   const [itemsInCart, setItemsInCart] = useState([]);
   const transportFee = 3; 
 
   useEffect(() => {
-    console.log("cartItems:", cartItems); 
-    
-    const selectedItems = food_list.filter(item => 
-      cartItems.some(cartItem => cartItem.foodItemId === item._id)
-    );
-    
-    const itemsWithQuantities = selectedItems.map(item => {
-      const cartItem = cartItems.find(cartItem => cartItem.foodItemId === item._id);
-      return { ...item, quantity: cartItem.quantity };
-    });
-    
-    console.log("itemsWithQuantities:", itemsWithQuantities); 
-    
-    setItemsInCart(itemsWithQuantities);
+    setItemsInCart(cartItems);
   }, [cartItems]);
 
   const handlePlaceOrder = () => {
@@ -32,24 +19,22 @@ const Cart = ({ cartItems, paymentMethod, setPaymentMethod, removeFromCart, plac
 
   const totalPrice = itemsInCart.reduce((total, item) => total + item.price * item.quantity, 0) + transportFee;
 
-  console.log("Current paymentMethod:", paymentMethod); 
-
   return (
-    <div className="food-menuu">
+    <div className="food-menuu cart-container">
       <h2 id='menuu'>Karta</h2>
       <ul className="space-y-2">
         {itemsInCart.map((item) => (
-          <div key={item._id} className="food-item" id='dflex'>
+          <div key={item.foodItemId} className="food-item cart-item" id='dflex'>
             <div>
               <h3 className="text-lg font-semibold">{item.name}</h3>
-              <img id='img' src={item.image} alt={item.name} className="w-16 h-16 object-cover" />
+              <img id='img' src={assetUrl(item.image)} alt={item.name} className="w-16 h-16 object-cover" />
             </div>
             <div id='desc'>
               <p>{item.description}</p>
               <label htmlFor="quantity">Sasia:</label>
               <p>{item.quantity}</p>
               <p className="text-gray-600">Cmimi: ${item.price.toFixed(2)}</p>
-              <button onClick={() => removeFromCart(item._id)} className="remove">Remove</button>
+              <button onClick={() => removeFromCart(item.foodItemId)} className="remove">Remove</button>
             </div>
           </div>
         ))}

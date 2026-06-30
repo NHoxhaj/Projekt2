@@ -3,7 +3,15 @@ const Order= require('../models/order.model');
 const Client= require('../models/user.model')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { cookieOptions } = require('../config/security.config');
 const secret = process.env.FIRST_SECRET_KEY;
+
+const sanitizeAdmin = (admin) => {
+  const plainAdmin = admin.toObject ? admin.toObject() : admin;
+  const { password, confirmPassword, __v, ...safeAdmin } = plainAdmin;
+  return safeAdmin;
+};
+
 module.exports = {
   register: async (req, res) => {
     try {
@@ -49,7 +57,7 @@ login : async (req, res) => {
     }
 
     const adminToken = jwt.sign({ id: admin._id, role: 'admin' }, secret, { expiresIn: '1h' });
-res.cookie("admintoken", adminToken, { httpOnly: true }).json({ admin });
+res.cookie("admintoken", adminToken, cookieOptions).json({ admin: sanitizeAdmin(admin) });
 
   } catch (err) {
     console.error(err);
@@ -58,11 +66,11 @@ res.cookie("admintoken", adminToken, { httpOnly: true }).json({ admin });
 },
 
 logout: (req, res) => {
-    res.clearCookie('admintoken');
+    res.clearCookie('admintoken', cookieOptions);
     res.sendStatus(200);
 },
 checkAuth :async(req, res) => {
-    const token = req.cookies.usertoken;
+    const token = req.cookies.admintoken;
     if (!token) {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -71,7 +79,7 @@ checkAuth :async(req, res) => {
       if (err) {
         return res.status(401).json({ error: "Unauthorized" });
       } else {
-        res.status(200).json({ msg: "Authorized", user: decoded });
+        res.status(200).json({ msg: "Authorized", admin: decoded });
       }
     });
   },

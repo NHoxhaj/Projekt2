@@ -9,8 +9,10 @@ import EarningsPage from './components/EarningsPage';
 import AdminUsers from './components/AdminUserOrders';
 import Stat from './components/Stat';
 import UserOrderHistory from './components/OrderHistory';
+import { apiUrl, setupCsrfProtection } from './config/api';
 
 axios.defaults.withCredentials = true;
+setupCsrfProtection();
 
 const App = () => {
   const [adminLoggedIn, setAdminLoggedIn] = useState(false);
@@ -20,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const checkAdminLoginStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/adminCheckAuth', { withCredentials: true });
+        const response = await axios.get(apiUrl('/api/adminCheckAuth'), { withCredentials: true });
         if (response.status === 200) {
           setAdminLoggedIn(true);
           setAdmin(response.data.admin);
@@ -46,7 +48,7 @@ const App = () => {
   
   const handleAdminLogout = async () => {
     try {
-      await axios.get('http://localhost:8000/api/admin/logout');
+      await axios.post(apiUrl('/api/admin/logout'), {}, { withCredentials: true });
       setAdminLoggedIn(false);
       setAdmin(null);
     } catch (err) {
@@ -58,14 +60,14 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/AdminAuth" element={<AdminAuth setAdminLoggedIn={setAdminLoggedIn} setAdmin={setAdmin} />} />
+        <Route path="/" element={<AdminAuth setAdminLoggedIn={setAdminLoggedIn} setAdmin={setAdmin} />} />
         <Route path="/admin/orders" element={adminLoggedIn ? (
           <>
             <AdminNavBar handleAdminLogout={handleAdminLogout} />
             <AdminOrders adminLoggedIn={adminLoggedIn} admin={admin} />
           </>
         ) : (
-          <Navigate to="/AdminAuth" />
+          <Navigate to="/" />
         )} />
          <Route path="/admin/users" element={adminLoggedIn ? (
           <>
@@ -73,7 +75,7 @@ const App = () => {
             <AdminUsers />
           </>
         ) : (
-          <Navigate to="/AdminAuth" />
+          <Navigate to="/" />
         )} />
          <Route path="/admin/earnings" element={adminLoggedIn ? (
           <>
@@ -81,7 +83,7 @@ const App = () => {
             <EarningsPage />
           </>
         ) : (
-          <Navigate to="/AdminAuth" />
+          <Navigate to="/" />
         )} />
        
          <Route path="/admin/users/:userId/orders" element={adminLoggedIn ? (
@@ -90,7 +92,7 @@ const App = () => {
             <UserOrderHistory />
           </>
         ) : (
-          <Navigate to="/AdminAuth" />
+          <Navigate to="/" />
         )} />
               <Route path="/admin/stat" element={adminLoggedIn ? (
           <>
@@ -98,7 +100,7 @@ const App = () => {
             <Stat />
           </>
         ) : (
-          <Navigate to="/AdminAuth" />
+          <Navigate to="/" />
         )} />
         
       </Routes>

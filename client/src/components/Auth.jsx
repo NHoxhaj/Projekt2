@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
 import image from '../assets/image.png';
+import { apiUrl } from '../config/api';
 const Auth = ({ setLoggedIn, setUser }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ const Auth = ({ setLoggedIn, setUser }) => {
       return;
     }
 
-    const url = isLogin ? 'http://localhost:8000/api/login' : 'http://localhost:8000/api/register';
+    const url = isLogin ? apiUrl('/api/login') : apiUrl('/api/register');
     const data = isLogin ? { email: formData.email, password: formData.password } : formData;
 
     try {
@@ -110,7 +111,7 @@ const Auth = ({ setLoggedIn, setUser }) => {
         </div>
         <div className={`auth-toggle-container ${isLogin ? 'toggle-left' : 'toggle-right'}`}>
         <div><img src={image} alt="logo" className="logo" /> </div>
-        <div id='dflex'><p id='pyetje' onClick={() => setIsLogin(!isLogin)} >
+        <div id='dflex' className="auth-toggle-row"><p id='pyetje' onClick={() => setIsLogin(!isLogin)} >
             {isLogin ?  'Nuk e ke nje llogari? ' : 'E ke tashme nje llogari? '}
           </p>
           <button onClick={() => setIsLogin(!isLogin)} className="toggle-button">

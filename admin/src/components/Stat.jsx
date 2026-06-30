@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2';
+import { apiUrl } from '../config/api';
 
 const Stat = () => {
   const [topProducts, setTopProducts] = useState([]);
@@ -21,22 +22,22 @@ const Stat = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsResponse = await axios.get(`http://localhost:8000/api/admin/top-products`);
+        const productsResponse = await axios.get(apiUrl('/api/admin/top-products'), { withCredentials: true });
         setTopProducts(productsResponse.data.data || []);
-        const leastProductsResponse = await axios.get(`http://localhost:8000/api/admin/least-ordered`);
+        const leastProductsResponse = await axios.get(apiUrl('/api/admin/least-ordered'), { withCredentials: true });
         setLeastProducts(leastProductsResponse.data.data || []);
-        const paymentResponse = await axios.get(`http://localhost:8000/api/admin/payment-distribution`);
+        const paymentResponse = await axios.get(apiUrl('/api/admin/payment-distribution'), { withCredentials: true });
         setPaymentData({
           cash: paymentResponse.data.cash || 0,
           creditCard: paymentResponse.data.creditCard || 0,
         });
-        const addressResponse = await axios.get(`http://localhost:8000/api/admin/address-distribution`);
+        const addressResponse = await axios.get(apiUrl('/api/admin/address-distribution'), { withCredentials: true });
         setAddressData({
           tirane: addressResponse.data.tirane || 0,
           tjeter: addressResponse.data.tjeter || 0,
         });
 
-        const response = await axios.get(`http://localhost:8000/api/admin/top-day`);
+        const response = await axios.get(apiUrl('/api/admin/top-day'), { withCredentials: true });
         const averageOrdersByDay = response.data.topDays || [];
         if (averageOrdersByDay.length > 0) {
           let maxAverageOrders = Math.max(...averageOrdersByDay.map(day => day.averageOrders));
@@ -114,25 +115,22 @@ const Stat = () => {
 
         <div className="top-items">
           <h5>Produktet e preferuara</h5>
-          <ul>
             <h5>{topProducts.map((item, index) => (
-              <li key={index}>
+              <h4 key={index}>
                 <strong>{item._id}</strong> - {item.totalOrders} porosi
-              </li>
+              </h4>
             ))}</h5>
-          </ul>
+        
         </div>
 
         <div className="bottom-items">
           <h5>Produktet më pak  te preferuara</h5>
-          <ul>
            <h5> {leastProducts.map((item, index) => (
-              <li key={index}>
+              <h4 key={index}>
                 <strong>{item._id}</strong> - {item.totalOrders} porosi
-              </li>
+              </h4>
             ))}</h5>
-          </ul>
-        </div>
+            </div>
         </div> 
     </div>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material'; 
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { apiUrl } from '../config/api';
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -15,11 +16,7 @@ const AdminUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/admin/users', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+        const response = await axios.get(apiUrl('/api/admin/users'), { withCredentials: true });
         setUsers(response.data);
         setLoading(false);
       } catch (err) {
@@ -51,11 +48,7 @@ const AdminUsers = () => {
   const handleDelete = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`http://localhost:8000/api/admin/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+        await axios.delete(apiUrl(`/api/admin/users/${userId}`), { withCredentials: true });
         setUsers(users.filter(user => user._id !== userId));
       } catch (err) {
         setError(err.response?.data?.message || 'Error deleting user');

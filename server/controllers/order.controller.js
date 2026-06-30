@@ -1,21 +1,61 @@
 const Order = require('../models/order.model');
+const FoodItem = require('../models/foodItem.model');
+
+const DELIVERY_FEE = 3;
 
 exports.createOrder = async (req, res) => {
   try {
-    const { userId, qyteti, adresa, items,paymentMethod, totalPrice, deliveryTime ,orderNumber} = req.body;
+    const { qyteti, adresa, items, paymentMethod, deliveryTime } = req.body;
+    const userId = req.userId;
 
-    if (!userId || !qyteti || !adresa || !paymentMethod|| !items || items.length === 0) {
+    if (!userId || !qyteti || !adresa || !paymentMethod || !items || items.length === 0) {
       return res.status(400).json({ message: "All required fields must be provided" });
     }
 
+    const submittedItems = items.map((item) => ({
+      foodItemId: item.foodItemId || item.id,
+      quantity: Number(item.quantity),
+    }));
+
+    if (submittedItems.some((item) => !item.foodItemId || !Number.isInteger(item.quantity) || item.quantity < 1)) {
+      return res.status(400).json({ message: "Invalid order items" });
+    }
+
+    const foodItems = await FoodItem.find({
+      _id: { $in: submittedItems.map((item) => item.foodItemId) },
+    }).lean();
+
+    if (foodItems.length !== submittedItems.length) {
+      return res.status(400).json({ message: "One or more food items are invalid" });
+    }
+
+    const foodItemById = new Map(foodItems.map((item) => [item._id.toString(), item]));
+    const trustedItems = submittedItems.map((item) => {
+      const foodItem = foodItemById.get(item.foodItemId.toString());
+
+      return {
+        foodItemId: foodItem._id,
+        quantity: item.quantity,
+        name: foodItem.name,
+        image: foodItem.image,
+        description: foodItem.description,
+        price: foodItem.price,
+      };
+    });
+
+    const totalPrice = trustedItems.reduce(
+      (total, item) => total + item.quantity * item.price,
+      DELIVERY_FEE
+    );
+
     const order = new Order({
       userId,
-      items,
+      items: trustedItems,
       adresa,
       qyteti,
       totalPrice,
       deliveryTime,
-      orderNumber,
+      orderNumber: `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       status: 'Pending',
       paymentMethod,
     });
@@ -32,14 +72,15 @@ exports.getAllOrders = async (req, res) => {
     let orders;
 
     if (req.adminId) {
-      orders = await Order.find().populate('userId').populate('items.foodItemId');
+      orders = await Order.find()
+        .populate('userId', '-password -__v')
+        .populate('items.foodItemId');
     } else if (req.userId) {
       orders = await Order.find({ userId: req.userId }).populate('items.foodItemId');
     } else {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    console.log('Fetched orders:', orders); 
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -59,10 +100,15 @@ exports.getOrderById = async (req, res) => {
 };
 exports.getOrderStatusById = async (req, res) => {
   try {
-      const order = await Order.findById(req.params.id, 'status');
+      const order = await Order.findById(req.params.id, 'status userId');
       if (!order) {
           return res.status(404).json({ message: "Order not found" });
       }
+
+      if (!req.adminId && order.userId.toString() !== req.userId) {
+          return res.status(403).json({ message: "Forbidden" });
+      }
+
       res.status(200).json({ status: order.status });
   } catch (error) {
       res.status(500).json({ message: error.message });

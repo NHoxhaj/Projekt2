@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import NavBar from './Navbar.jsx';
+import { API_URL, apiUrl, assetUrl } from '../config/api';
 
 
-const socket = io('http://localhost:8000', {
+const socket = io(API_URL, {
   transports: ['websocket', 'polling'],
+  withCredentials: true,
 });
 
 const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
@@ -14,13 +16,7 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/orders', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-  
-        console.log('Fetched orders:', response.data);
+        const response = await axios.get(apiUrl('/api/orders'), { withCredentials: true });
   
         if (Array.isArray(response.data)) {
           const sortedOrders = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -37,7 +33,6 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
     fetchOrders();
   
     socket.on('orderStatusUpdated', (updatedOrder) => {
-      console.log('Order status updated:', updatedOrder);
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === updatedOrder._id ? updatedOrder : order
@@ -72,7 +67,7 @@ const Orders = ({ loggedIn, user, handleLogout, setSearchTerm }) => {
                       <div key={item._id} className="order-item-detail">
                         <p> <span className="label">Emri: </span>{item.name}</p>
                         <p> <span className="label">Sasia: </span> {item.quantity}</p>
-                        <img src={item.image} alt={item.name} style={{ width: '100px', height: '100px' }} />
+                        <img src={assetUrl(item.image)} alt={item.name} style={{ width: '100px', height: '100px' }} />
                         
                       </div>
                     ))

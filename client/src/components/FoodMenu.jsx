@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { food_list } from '../assets/assets';
+import { apiUrl, assetUrl } from '../config/api';
 
 
 const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) => {
   const [filteredItems, setFilteredItems] = useState([]);
-
+  const [menuItems, setMenuItems] = useState([]);
 
   useEffect(() => {
-    const Items = food_list.filter(item =>
+    const fetchMenuItems = async () => {
+      try {
+        const response = await axios.get(apiUrl('/api/foodItems'));
+        setMenuItems(response.data);
+      } catch (error) {
+        setMenuItems(food_list);
+      }
+    };
+
+    fetchMenuItems();
+  }, []);
+
+  useEffect(() => {
+    const Items = menuItems.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredItems(Items);
-  }, [searchTerm]);
+  }, [menuItems, searchTerm]);
 
   const handleAddToCart = (item) => {
-    console.log("Adding to cart:", item);
     const itemWithQuantity = { ...item, quantity: quantities[item._id] || 1 };
     addToCart(itemWithQuantity);
   };
@@ -28,7 +42,7 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
             <div >
               <div id='dflex'>
                 <h3>{item.name}</h3>
-                <img id='img' src={item.image} alt={item.name} />
+                <img id='img' src={assetUrl(item.image)} alt={item.name} />
               </div>
               <div id='desc'>
                 <p>{item.description}</p>

@@ -18,7 +18,7 @@ const AdminNavBar = ({ handleAdminLogout }) => {
       await handleAdminLogout();
     }
     setMenuOpen(false);
-    navigate('/AdminAuth');
+    navigate('/');
   };
 
   const isActive = (path) => location.pathname === path;

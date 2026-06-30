@@ -21,7 +21,7 @@ const NavBar = ({ loggedIn, user, handleLogout, setSearchTerm, cartItemCount }) 
 
   const handleLogoutClick = async () => {
     await handleLogout();
-    navigate('/auth');
+    navigate('/');
   };
 
   const handleSearchChange = (event) => {

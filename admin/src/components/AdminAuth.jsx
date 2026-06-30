@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import blu from '../assets/blu.png';
+import blu from '../../../server/public/assets/blu.png';
 import '../App.css';
+import { apiUrl } from '../config/api';
 
 const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
   const [isAdminLogin, setIsAdminLogin] = useState(true);
@@ -28,7 +29,7 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
       return;
     }
 
-    const url = isAdminLogin ? 'http://localhost:8000/api/admin/login' : 'http://localhost:8000/api/admin/register';
+    const url = isAdminLogin ? apiUrl('/api/admin/login') : apiUrl('/api/admin/register');
     const data = isAdminLogin ? { email: formData.email, password: formData.password } : formData;
 
     try {

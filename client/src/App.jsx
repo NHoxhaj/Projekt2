@@ -9,8 +9,10 @@ import './App.css';
 import Orders from './components/Orders';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { apiUrl, setupCsrfProtection } from './config/api';
 
 axios.defaults.withCredentials = true;
+setupCsrfProtection();
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -27,7 +29,7 @@ const App = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/checkAuth', { withCredentials: true });
+        const response = await axios.get(apiUrl('/api/checkAuth'), { withCredentials: true });
         if (response.status === 200) {
           setLoggedIn(true);
           setUser(response.data.user);
@@ -112,27 +114,16 @@ const removeFromCart = (id) => {
       }
   
       const orderPayload = {
-        userId: user._id, 
         items: cartItems.map((item) => ({
           foodItemId: item.foodItemId,
-          name: item.name,
-          description:item.description,
-          image: item.image,
           quantity: item.quantity,
-          price: item.price,
         })),
-        totalPrice: cartItems.reduce((total, item) => total +3+ item.quantity * item.price, 0),
         qyteti,
         adresa,
-         orderNumber: `ORD-${Date.now()}`,
         paymentMethod,
       };
   
-      const response = await axios.post('http://localhost:8000/api/orders', orderPayload, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const response = await axios.post(apiUrl('/api/orders'), orderPayload, { withCredentials: true });
   
       if (response.status === 201) {
         alert('Order placed successfully!');
@@ -152,7 +143,7 @@ const removeFromCart = (id) => {
   
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:8000/api/logout');
+      await axios.post(apiUrl('/api/logout'), {}, { withCredentials: true });
       setLoggedIn(false);
       setUser(null);
     } catch (err) {
@@ -166,7 +157,7 @@ const removeFromCart = (id) => {
     <Router>
       <Routes>
   
-        <Route path="/auth" element={<Auth setLoggedIn={setLoggedIn} setUser={setUser} />} />
+        <Route path="/" element={<Auth setLoggedIn={setLoggedIn} setUser={setUser} />} />
         <Route path="/menu" element={loggedIn ? (
           <>
             <NavBar 
@@ -189,7 +180,7 @@ const removeFromCart = (id) => {
             <Footer /> 
           </>
         ) : (
-          <Navigate to="/auth" />
+          <Navigate to="/" />
         )} />
         <Route path="/cart" element={loggedIn ? (
           <>
@@ -213,7 +204,7 @@ const removeFromCart = (id) => {
             />
           </>
         ) : (
-          <Navigate to="/auth" />
+          <Navigate to="/" />
         )} />
         
         <Route path="/orders" element={loggedIn ? (
@@ -228,7 +219,7 @@ const removeFromCart = (id) => {
             />
           </>
         ) : (
-          <Navigate to="/auth" />
+          <Navigate to="/" />
         )} />
       </Routes>
     </Router>
