@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        app: [client, admin, server]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ${{ matrix.app }}/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.app }}
+        run: npm ci
+
+      - name: Audit dependencies
+        working-directory: ${{ matrix.app }}
+        run: npm audit --audit-level=high
+
+      - name: Build frontend
+        if: matrix.app != 'server'
+        working-directory: ${{ matrix.app }}
+        run: npm run build
