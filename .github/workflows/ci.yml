@@ -37,3 +37,8 @@ jobs:
         if: matrix.app != 'server'
         working-directory: ${{ matrix.app }}
         run: npm run build
+
+      - name: Run backend tests
+        if: matrix.app == 'server'
+        working-directory: ${{ matrix.app }}
+        run: npm test

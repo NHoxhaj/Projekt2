@@ -121,6 +121,7 @@ const EarningsPage = () => {
   return (
     <div className="admin-content-page earnings-page">
         <div className="filter-navbar">
+
           <button className='aaa' onClick={() => setPeriod('daily')}>Ditore  <ExpandMoreIcon style={{ color: 'white', fontSize: '30px', marginLeft: '5px' }} /></button>
           <button className='aaa' onClick={() => setPeriod('weekly')}>Javore  <ExpandMoreIcon style={{ color: 'white', fontSize: '30px', marginLeft: '5px' }} /></button>
           <button className='aaa' onClick={() => setPeriod('monthly')}>Mujore  <ExpandMoreIcon style={{ color: 'white', fontSize: '30px', marginLeft: '5px' }} /></button>

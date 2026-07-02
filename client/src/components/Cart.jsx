@@ -25,15 +25,19 @@ const Cart = ({ cartItems, paymentMethod, setPaymentMethod, removeFromCart, plac
       <ul className="space-y-2">
         {itemsInCart.map((item) => (
           <div key={item.foodItemId} className="food-item cart-item" id='dflex'>
-            <div>
+            <div className="cart-card-media">
               <h3 className="text-lg font-semibold">{item.name}</h3>
               <img id='img' src={assetUrl(item.image)} alt={item.name} className="w-16 h-16 object-cover" />
             </div>
-            <div id='desc'>
-              <p>{item.description}</p>
-              <label htmlFor="quantity">Sasia:</label>
-              <p>{item.quantity}</p>
-              <p className="text-gray-600">Cmimi: ${item.price.toFixed(2)}</p>
+            <div id='desc' className="cart-card-details">
+              <p className="cart-card-description"><span>Perberesit:</span> {item.description}</p>
+              <div className="cart-card-meta">
+                <div className="cart-card-quantity">
+                  <label htmlFor="quantity">Sasia:</label>
+                  <p>{item.quantity}</p>
+                </div>
+                <p className="text-gray-600 cart-card-price">Cmimi: ${item.price.toFixed(2)}</p>
+              </div>
               <button onClick={() => removeFromCart(item.foodItemId)} className="remove">Remove</button>
             </div>
           </div>

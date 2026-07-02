@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "seed:food": "node seed-food-items.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --runInBand"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +24,9 @@
     "mongoose": "^8.4.4",
     "socket.io": "^4.7.5"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
+  }
 }

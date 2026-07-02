@@ -86,7 +86,8 @@ const Stat = () => {
   };
 
   return (
-    <div className="admin-content-page stat-page">
+    <div className="admin-content-page text-center stat-page">
+      <h1 className='titullst'>Statistikat</h1>
         <div className="pie-charts" id='dflex'>
           <div className="stat-chart-card">
             <h4>Shpërndarja e porosive sipas qytetit</h4>

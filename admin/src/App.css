@@ -565,6 +565,7 @@ max-width: 310px;
   .order-list {
     flex: 1;
     background-color: #f8f9fa;
+    margin-bottom: 10px;
     padding: 10px 30px 10px 10px;
     border-radius: 8px;
   }
@@ -822,7 +823,7 @@ max-width: 310px;
     color: #ffffff;
   }
   .top-items{
-   margin-left: 50px;
+
     margin-top: 60px;
     background: linear-gradient(to bottom, #7e0202, #d31407, #fc5c00, #ff5100);
     box-shadow: 3px 4px 3px 5px rgba(5, 0, 0, 0.925);
@@ -1157,6 +1158,8 @@ max-width: 310px;
 
   #dflex{
     display: flex;
+    margin: 0% 7% 0% 0%;
+    font-size: x-large;
   }
   .food-menu-container {
     position: relative; 
@@ -1423,6 +1426,7 @@ margin-right: 10%;
   
   .order-list {
     flex: 1;
+    margin-bottom: 10px;
     background-color: #f8f9fa;
     padding: 10px 30px 10px 10px;
     border-radius: 8px;
@@ -1591,7 +1595,7 @@ margin-right: 10%;
     align-items: center;
     justify-content: space-around;
     background: linear-gradient(to bottom, #95c5ff,  #0e71e9,#023880);
-    padding: 20px 20px;
+    padding: 2px 2px;
     border-radius: 15px;
     margin-bottom: 30px;
   }
@@ -1732,7 +1736,6 @@ margin-right: 10%;
     color: #ffffff;
   }
   .top-items{
-   margin-left: 50px;
     margin-top: 60px;
     background: linear-gradient(to bottom, #7e0202, #d31407, #fc5c00, #ff5100);
     box-shadow: 3px 4px 3px 5px rgba(5, 0, 0, 0.925);
@@ -2062,6 +2065,7 @@ margin-right: 10%;
 
   #dflex{
     display: flex;
+        margin: 0% 7% 0% 0%;
   }
   .food-menu-container {
         background-color: bisque;
@@ -2965,6 +2969,7 @@ margin-right: 10%;
   
     #dflex{
       display: flex;
+          margin: 0% 7% 0% 0%;
     }
     .food-menu-container {
           background-color: bisque;
@@ -3896,6 +3901,7 @@ margin-right: 10%;
   }
   #dflex{
     display: flex;
+        margin: 0% 7% 0% 0%;
   }
   .food-menu-container {
     position: relative;
@@ -5400,7 +5406,12 @@ margin-right: 10%;
   }
   
 }
-
+.titullst{
+  background-color: #1853d1;
+  text-align: center;
+  color: white;
+  padding: 10px
+}
 /* Admin responsive layout overrides */
 .admin-content-page {
   margin-left: 250px;
@@ -5914,5 +5925,105 @@ margin-right: 10%;
 
   .stat-page .pie-charts {
     gap: 28px;
+  }
+}
+
+@media (max-width: 800px) {
+  .earnings-page .filter-navbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+  }
+
+  .earnings-page .filter-navbar .aaa {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .admin-users-page .users-filter-navbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+  }
+
+  .admin-users-page .users-filter-navbar .aaa {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+  }
+
+  .admin-users-page .users-table {
+    display: block;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 14px;
+  }
+
+  .admin-users-page .users-table thead {
+    display: none;
+  }
+
+  .admin-users-page .users-table tbody,
+  .admin-users-page .users-table tr,
+  .admin-users-page .users-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-users-page .users-table tr {
+    padding: 12px;
+    border: 1px solid #dbe4f0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(16, 35, 92, 0.08);
+  }
+
+  .admin-users-page .users-table td {
+    display: grid;
+    grid-template-columns: minmax(110px, 42%) minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 10px 4px;
+    border: 0;
+    border-bottom: 1px solid #edf1f7;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  .admin-users-page .users-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .admin-users-page .users-table td::before {
+    content: attr(data-label);
+    color: #334155;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .admin-users-page .users-table td:nth-child(5)::before {
+    content: "Totali i shpenzimeve";
+  }
+
+  .admin-users-page .users-table td[data-label="Veprimet"] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .admin-users-page .users-table td[data-label="Veprimet"]::before {
+    flex: 0 0 110px;
+  }
+
+  .admin-users-page .users-table .aa {
+    min-width: 0;
+    white-space: normal;
   }
 }

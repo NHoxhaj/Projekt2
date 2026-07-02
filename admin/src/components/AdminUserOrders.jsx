@@ -60,11 +60,11 @@ const AdminUsers = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="admin-page admin-content-page">
+    <div className="admin-page admin-content-page admin-users-page">
       
 
       <div className="main-content">
-        <div className="filter-navbar">
+        <div className="filter-navbar users-filter-navbar">
           <button onClick={() => setFilterType('oneTime')} className="aaa">
             One-time Buyers  <ExpandMoreIcon style={{ color: 'white', fontSize: '30px', marginLeft: '5px' }} />
           </button>
@@ -79,7 +79,7 @@ const AdminUsers = () => {
           </button>
         </div>
 
-        <table className="table table-striped mt-4">
+        <table className="table table-striped mt-4 users-table">
           <thead>
             <tr>
               <th>Emri</th>
@@ -93,12 +93,12 @@ const AdminUsers = () => {
           <tbody>
             {filterUsers().map((user) => (
               <tr key={user._id}>
-                <td>{user.firstName} {user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{getFavoriteProduct(user.orders)}</td> 
-                <td>{user.orders.length}</td>
+                <td data-label="Emri">{user.firstName} {user.lastName}</td>
+                <td data-label="Email">{user.email}</td>
+                <td data-label="Produkti i preferuar">{getFavoriteProduct(user.orders)}</td> 
+                <td data-label="Totali i porosive">{user.orders.length}</td>
                 <td>{user.totalMoneySpent.toFixed(2)} €</td>
-                <td>
+                <td data-label="Veprimet">
                   <button
                     className="aa"
                     onClick={() => viewOrderHistory(user._id)}

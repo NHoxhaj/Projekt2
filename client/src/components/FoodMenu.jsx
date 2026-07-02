@@ -39,23 +39,33 @@ const FoodMenu = ({ addToCart, searchTerm, handleQuantityChange, quantities }) =
       <div className="food-menu">
         {filteredItems.map(item => (
           <div key={item._id} className="food-item">
-            <div >
-              <div id='dflex'>
+            <div className="food-card-content">
+              <div id='dflex' className="food-card-header">
                 <h3>{item.name}</h3>
-                <img id='img' src={assetUrl(item.image)} alt={item.name} />
               </div>
-              <div id='desc'>
-                <p>{item.description}</p>
-                <label id='cmimi' htmlFor="price">Cmimi:</label>
-                <p>${item.price.toFixed(2)}</p>
-                <label id='sasia'>Sasia:</label>
-                <input
-                id='input-line'
-                  type="number"
-                  min="1"
-                  value={quantities[item._id] || 1}
-                  onChange={(e) => handleQuantityChange(item._id, parseInt(e.target.value))}
-                />
+              <div className="food-card-main">
+                <img id='img' className="food-card-image" src={assetUrl(item.image)} alt={item.name} />
+                <div id='desc' className="food-card-details">
+                  <p className="food-card-description"><span>Perberesit:</span> {item.description}</p>
+                </div>
+              </div>
+              <div className="food-card-meta">
+                <div className="food-card-price">
+                  <label id='cmimi' htmlFor="price">Cmimi:</label>
+                  <p>${item.price.toFixed(2)}</p>
+                </div>
+                <div className="food-card-quantity">
+                  <label id='sasia'>Sasia:</label>
+                  <input
+                  id='input-line'
+                    type="number"
+                    min="1"
+                    value={quantities[item._id] || 1}
+                    onChange={(e) => handleQuantityChange(item._id, parseInt(e.target.value))}
+                  />
+                </div>
+              </div>
+              <div className="food-card-actions">
                 <button id='order' onClick={() => handleAddToCart(item)}>Shto ne karte</button>
               </div>
             </div>

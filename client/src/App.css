@@ -5962,3 +5962,333 @@ margin-right: 10%;
     min-height: 36px;
   }
 }
+
+.food-card-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.food-card-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.food-card-description span,
+.food-card-price label,
+.food-card-quantity label {
+  font-weight: 700;
+}
+
+.food-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.food-card-price,
+.food-card-quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.food-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 700px) {
+  .food-menu-container {
+    padding: 18px 12px 48px;
+  }
+
+  .food-menu-container #menu {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 10px auto 18px !important;
+    padding: 8px 0 !important;
+    text-align: center;
+    font-size: 34px;
+    line-height: 1.1;
+  }
+
+  .food-menu {
+    columns: auto !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    width: 100%;
+    margin: 0 !important;
+  }
+
+  .food-item {
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 18px !important;
+    border-radius: 24px !important;
+  }
+
+  .food-card-header h3 {
+    margin: 0 0 14px;
+    color: #4f2607;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px !important;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .food-card-main {
+    display: grid;
+    grid-template-columns: 128px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+  }
+
+  .food-card-main #img,
+  .food-card-image {
+    width: 128px !important;
+    height: 118px !important;
+    border-radius: 24px !important;
+    object-fit: cover;
+  }
+
+  .food-card-details,
+  .food-card-details #desc {
+    padding-left: 0 !important;
+  }
+
+  .food-card-description {
+    margin: 0 !important;
+    color: #2f241a;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px !important;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .food-card-description span {
+    display: block;
+    margin-bottom: 3px;
+    color: #5f2d06;
+    font-size: 19px;
+  }
+
+  .food-card-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .food-card-price,
+  .food-card-quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .food-card-price label,
+  .food-card-quantity label,
+  .food-card-price p {
+    margin: 0 !important;
+    color: #2f241a;
+    font-size: 18px !important;
+    line-height: 1.2;
+  }
+
+  .food-card-quantity #input-line {
+    width: 64px !important;
+    height: 42px;
+    padding: 4px 8px;
+    font-size: 18px;
+    border-radius: 10px;
+  }
+
+  .food-card-actions {
+    justify-content: flex-end;
+    margin-top: 14px;
+  }
+
+  .food-card-actions #order {
+    margin: 0 !important;
+    min-height: 40px;
+    padding: 6px 16px;
+    font-size: 19px !important;
+    line-height: 1.1;
+  }
+
+  .cart-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0 !important;
+    padding: 18px 12px 48px !important;
+    color: #25180e;
+  }
+
+  .cart-container #menuu {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 10px auto 18px !important;
+    padding: 8px 0 !important;
+    text-align: center;
+    font-size: 34px;
+    line-height: 1.1;
+  }
+
+  .cart-container .space-y-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .cart-item {
+    display: grid !important;
+    grid-template-columns: 128px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    width: 100% !important;
+    box-sizing: border-box;
+    margin: 0 !important;
+    padding: 18px !important;
+    border-radius: 24px !important;
+  }
+
+  .cart-card-media h3 {
+    margin: 0 0 10px;
+    color: #3a1c05;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px !important;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .cart-card-media #img {
+    width: 128px !important;
+    height: 118px !important;
+    border-radius: 24px !important;
+    object-fit: cover;
+  }
+
+  .cart-item #desc,
+  .cart-card-details {
+    min-width: 0;
+    padding: 0 !important;
+  }
+
+  .cart-card-description {
+    margin: 0 !important;
+    color: #2a1d12;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px !important;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .cart-card-description span {
+    display: block;
+    margin-bottom: 3px;
+    color: #5f2d06;
+    font-size: 19px;
+    font-weight: 800;
+  }
+
+  .cart-card-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .cart-card-quantity,
+  .cart-card-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 !important;
+    color: #23170e !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px !important;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .cart-card-quantity p,
+  .cart-card-quantity label {
+    margin: 0 !important;
+  }
+
+  .cart-item .remove {
+    margin: 14px 0 0 !important;
+    min-height: 38px;
+    padding: 6px 14px;
+    font-size: 18px;
+  }
+
+  .cart-container .form-group,
+  .cart-container .form-group label,
+  .cart-container .form-group input,
+  .cart-container .total-price h5,
+  .cart-container #porosia {
+    color: #23170e;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .cart-container .form-group input {
+    min-height: 38px;
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  .cart-container .total-price h5 {
+    font-size: 20px;
+  }
+
+  .cart-container #porosia {
+    color: #fff;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 380px) {
+  .food-card-main {
+    grid-template-columns: 108px minmax(0, 1fr);
+  }
+
+  .food-card-main #img,
+  .food-card-image {
+    width: 108px !important;
+    height: 104px !important;
+  }
+
+  .food-card-description {
+    font-size: 17px !important;
+  }
+
+  .cart-item {
+    grid-template-columns: 108px minmax(0, 1fr);
+  }
+
+  .cart-card-media #img {
+    width: 108px !important;
+    height: 104px !important;
+  }
+
+  .cart-card-description {
+    font-size: 17px !important;
+  }
+}
