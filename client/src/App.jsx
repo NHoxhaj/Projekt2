@@ -10,6 +10,7 @@ import Orders from './components/Orders';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { apiUrl, setupCsrfProtection } from './config/api';
+import { Analytics } from '@vercel/analytics/react';
 
 axios.defaults.withCredentials = true;
 setupCsrfProtection();
@@ -222,6 +223,7 @@ const removeFromCart = (id) => {
           <Navigate to="/" />
         )} />
       </Routes>
+      <Analytics />
     </Router>
   );
 };

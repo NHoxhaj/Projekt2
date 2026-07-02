@@ -10,6 +10,7 @@ import AdminUsers from './components/AdminUserOrders';
 import Stat from './components/Stat';
 import UserOrderHistory from './components/OrderHistory';
 import { apiUrl, setupCsrfProtection } from './config/api';
+import { Analytics } from '@vercel/analytics/react';
 
 axios.defaults.withCredentials = true;
 setupCsrfProtection();
@@ -104,6 +105,7 @@ const App = () => {
         )} />
         
       </Routes>
+      <Analytics />
     </Router>
   );
 };
