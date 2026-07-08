@@ -6,11 +6,13 @@ const CSRF_HEADER_NAME = 'x-csrf-token';
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
 const getSecret = () => {
-  if (!process.env.FIRST_SECRET_KEY) {
-    throw new Error('FIRST_SECRET_KEY is required for CSRF protection');
+  const secret = process.env.CSRF_SECRET || process.env.FIRST_SECRET_KEY;
+
+  if (!secret) {
+    throw new Error('CSRF_SECRET or FIRST_SECRET_KEY is required for CSRF protection');
   }
 
-  return process.env.FIRST_SECRET_KEY;
+  return secret;
 };
 
 const signToken = (token) =>

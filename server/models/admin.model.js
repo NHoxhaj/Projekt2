@@ -20,7 +20,7 @@ const adminSchema = new mongoose.Schema({
       message: 'Password must match confirm password',
     },
   },
-});
+}, { timestamps: true });
 
 
 adminSchema.pre('save', async function(next) {

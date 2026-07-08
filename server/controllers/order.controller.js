@@ -1,15 +1,23 @@
+const crypto = require('crypto');
 const Order = require('../models/order.model');
 const FoodItem = require('../models/foodItem.model');
 
 const DELIVERY_FEE = 3;
+const ALLOWED_PAYMENT_METHODS = ['Cash', 'CreditCard'];
+const MAX_ITEM_QUANTITY = 20;
+const FOOD_ITEM_FIELDS = 'name price image description';
 
 exports.createOrder = async (req, res) => {
   try {
     const { qyteti, adresa, items, paymentMethod, deliveryTime } = req.body;
     const userId = req.userId;
 
-    if (!userId || !qyteti || !adresa || !paymentMethod || !items || items.length === 0) {
+    if (!userId || !qyteti || !adresa || !paymentMethod || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ message: "All required fields must be provided" });
+    }
+
+    if (!ALLOWED_PAYMENT_METHODS.includes(paymentMethod)) {
+      return res.status(400).json({ message: "Invalid payment method" });
     }
 
     const submittedItems = items.map((item) => ({
@@ -17,13 +25,18 @@ exports.createOrder = async (req, res) => {
       quantity: Number(item.quantity),
     }));
 
-    if (submittedItems.some((item) => !item.foodItemId || !Number.isInteger(item.quantity) || item.quantity < 1)) {
+    if (submittedItems.some((item) => (
+      !item.foodItemId ||
+      !Number.isInteger(item.quantity) ||
+      item.quantity < 1 ||
+      item.quantity > MAX_ITEM_QUANTITY
+    ))) {
       return res.status(400).json({ message: "Invalid order items" });
     }
 
     const foodItems = await FoodItem.find({
       _id: { $in: submittedItems.map((item) => item.foodItemId) },
-    }).lean();
+    }).select(FOOD_ITEM_FIELDS).lean();
 
     if (foodItems.length !== submittedItems.length) {
       return res.status(400).json({ message: "One or more food items are invalid" });
@@ -51,11 +64,11 @@ exports.createOrder = async (req, res) => {
     const order = new Order({
       userId,
       items: trustedItems,
-      adresa,
-      qyteti,
+      adresa: adresa.trim(),
+      qyteti: qyteti.trim(),
       totalPrice,
       deliveryTime,
-      orderNumber: `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      orderNumber: `ORD-${Date.now()}-${crypto.randomInt(1000, 9999)}`,
       status: 'Pending',
       paymentMethod,
     });
@@ -74,9 +87,12 @@ exports.getAllOrders = async (req, res) => {
     if (req.adminId) {
       orders = await Order.find()
         .populate('userId', '-password -__v')
-        .populate('items.foodItemId');
+        .populate('items.foodItemId', FOOD_ITEM_FIELDS)
+        .sort({ createdAt: -1 });
     } else if (req.userId) {
-      orders = await Order.find({ userId: req.userId }).populate('items.foodItemId');
+      orders = await Order.find({ userId: req.userId })
+        .populate('items.foodItemId', FOOD_ITEM_FIELDS)
+        .sort({ createdAt: -1 });
     } else {
       return res.status(401).json({ message: "Unauthorized" });
     }
@@ -89,7 +105,9 @@ exports.getAllOrders = async (req, res) => {
 
 exports.getOrderById = async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id).populate('UserId').populate('items.foodItemId');
+        const order = await Order.findById(req.params.id)
+          .populate('userId', '-password -__v')
+          .populate('items.foodItemId', FOOD_ITEM_FIELDS);
         if (!order) {
             return res.status(404).json({ message: "Order not found" });
         }

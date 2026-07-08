@@ -82,6 +82,7 @@ const Auth = ({ setLoggedIn, setUser }) => {
               type="email"
               name="email"
               placeholder="Email"
+              autoComplete="email"
               onChange={handleChange}
               required
               className="input-field"
@@ -90,6 +91,7 @@ const Auth = ({ setLoggedIn, setUser }) => {
               type="password"
               name="password"
               placeholder="Password"
+              autoComplete={isLogin ? 'current-password' : 'new-password'}
               onChange={handleChange}
               required
               className="input-field"
@@ -99,6 +101,7 @@ const Auth = ({ setLoggedIn, setUser }) => {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
+                autoComplete="new-password"
                 onChange={handleChange}
                 required
                 className="input-field"

@@ -3,9 +3,8 @@ const Admin = require("../models/admin.model");
 const Order = require("../models/order.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { cookieOptions } = require('../config/security.config');
+const { cookieOptions, jwtSecrets } = require('../config/security.config');
 require('dotenv').config();
-const secret = process.env.FIRST_SECRET_KEY;
 
 const sanitizeUser = (user) => {
   const plainUser = user.toObject ? user.toObject() : user;
@@ -16,7 +15,11 @@ const sanitizeUser = (user) => {
 module.exports.register = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    const userToken = jwt.sign({ id: user._id, firstName: user.firstName }, process.env.FIRST_SECRET_KEY);
+    const userToken = jwt.sign(
+      { id: user._id, firstName: user.firstName, role: 'user' },
+      jwtSecrets.user,
+      { expiresIn: '1h' }
+    );
     res.cookie("usertoken", userToken, cookieOptions).json({ msg: "Registration successful!", user: sanitizeUser(user) });
   } catch (err) {
     console.error(err); 
@@ -38,7 +41,7 @@ module.exports.login = async (req, res) => {
     if (!correctPassword) {
       return res.status(400).json({ error: "Incorrect password" });
     }
-    const token = jwt.sign({ id: user._id, role: 'user' }, secret, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, role: 'user' }, jwtSecrets.user, { expiresIn: '1h' });
     res.clearCookie('usertoken', cookieOptions);
     res.cookie("usertoken", token, cookieOptions).json({ user: sanitizeUser(user) });
   } catch (err) {
@@ -59,7 +62,7 @@ module.exports.checkAuth = (req, res) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  jwt.verify(token, process.env.FIRST_SECRET_KEY, (err, decoded) => {
+  jwt.verify(token, jwtSecrets.user, (err, decoded) => {
     if (err) {
       return res.status(401).json({ error: "Unauthorized" });
     } else {

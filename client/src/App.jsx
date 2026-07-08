@@ -15,6 +15,8 @@ import { Analytics } from '@vercel/analytics/react';
 axios.defaults.withCredentials = true;
 setupCsrfProtection();
 
+const enableVercelAnalytics = import.meta.env.VITE_ENABLE_VERCEL_ANALYTICS === 'true';
+
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [quantities, setQuantities] = useState({});
@@ -223,7 +225,7 @@ const removeFromCart = (id) => {
           <Navigate to="/" />
         )} />
       </Routes>
-      <Analytics />
+      {enableVercelAnalytics && <Analytics />}
     </Router>
   );
 };

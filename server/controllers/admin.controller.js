@@ -3,8 +3,7 @@ const Order= require('../models/order.model');
 const Client= require('../models/user.model')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { cookieOptions } = require('../config/security.config');
-const secret = process.env.FIRST_SECRET_KEY;
+const { cookieOptions, jwtSecrets } = require('../config/security.config');
 
 const sanitizeAdmin = (admin) => {
   const plainAdmin = admin.toObject ? admin.toObject() : admin;
@@ -56,7 +55,7 @@ login : async (req, res) => {
       return res.status(400).json("Incorrect password");
     }
 
-    const adminToken = jwt.sign({ id: admin._id, role: 'admin' }, secret, { expiresIn: '1h' });
+    const adminToken = jwt.sign({ id: admin._id, role: 'admin' }, jwtSecrets.admin, { expiresIn: '1h' });
 res.cookie("admintoken", adminToken, cookieOptions).json({ admin: sanitizeAdmin(admin) });
 
   } catch (err) {
@@ -75,7 +74,7 @@ checkAuth :async(req, res) => {
       return res.status(401).json({ error: "Unauthorized" });
     }
   
-    jwt.verify(token, process.env.FIRST_SECRET_KEY, (err, decoded) => {
+    jwt.verify(token, jwtSecrets.admin, (err, decoded) => {
       if (err) {
         return res.status(401).json({ error: "Unauthorized" });
       } else {

@@ -15,6 +15,8 @@ import { Analytics } from '@vercel/analytics/react';
 axios.defaults.withCredentials = true;
 setupCsrfProtection();
 
+const enableVercelAnalytics = import.meta.env.VITE_ENABLE_VERCEL_ANALYTICS === 'true';
+
 const App = () => {
   const [adminLoggedIn, setAdminLoggedIn] = useState(false);
   const [admin, setAdmin] = useState(null);
@@ -105,7 +107,7 @@ const App = () => {
         )} />
         
       </Routes>
-      <Analytics />
+      {enableVercelAnalytics && <Analytics />}
     </Router>
   );
 };

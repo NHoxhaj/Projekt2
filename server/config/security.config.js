@@ -13,6 +13,10 @@ const parseOrigins = (value) => {
 
 const allowedOrigins = parseOrigins(process.env.CLIENT_ORIGINS);
 const sameSite = process.env.COOKIE_SAME_SITE || 'lax';
+const jwtSecrets = {
+  user: process.env.USER_JWT_SECRET || process.env.FIRST_SECRET_KEY,
+  admin: process.env.ADMIN_JWT_SECRET || process.env.FIRST_SECRET_KEY,
+};
 
 const cookieOptions = {
   httpOnly: true,
@@ -33,4 +37,5 @@ module.exports = {
   cookieOptions,
   csrfCookieOptions,
   isProduction,
+  jwtSecrets,
 };

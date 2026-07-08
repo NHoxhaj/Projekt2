@@ -73,6 +73,7 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
               type="email"
               name="email"
               placeholder="Email"
+              autoComplete="email"
               onChange={handleChange}
               required
               className="input-field"
@@ -81,6 +82,7 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
               type="password"
               name="password"
               placeholder="Password"
+              autoComplete={isAdminLogin ? 'current-password' : 'new-password'}
               onChange={handleChange}
               required
               className="input-field"
@@ -90,6 +92,7 @@ const AdminAuth = ({ setAdminLoggedIn, setAdmin }) => {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
+                autoComplete="new-password"
                 onChange={handleChange}
                 required
                 className="input-field"
